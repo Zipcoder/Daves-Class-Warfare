@@ -1,8 +1,6 @@
 package io.classwarfare;
 
-/**
- * Created by brianabbott on 5/11/16.
- */
+
 public class Card {
     private Suit suit;
     private int value;

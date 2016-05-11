@@ -1,11 +1,10 @@
 package io.classwarfare;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * Created by brianabbott on 5/11/16.
- */
+
 public class Deck {
     ArrayList<Card> cards=new ArrayList<Card>();
 
@@ -39,5 +38,6 @@ public class Deck {
         cards.add(new Card(suit,10,"QUEEN"));
         cards.add(new Card(suit,10,"JACK"));
     }
+
 
 }

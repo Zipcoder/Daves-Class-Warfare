@@ -1,8 +1,6 @@
 package io.classwarfare;
 
-/**
- * Created by zihaocastine on 5/11/16.
- */
+
 public class Player {
     private double wallet;
     private int playId;
@@ -27,5 +25,5 @@ public class Player {
     public void collectWinnings(double amount){
         this.wallet+=amount;
     }
-    
+
 }

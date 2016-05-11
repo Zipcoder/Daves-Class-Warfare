@@ -3,10 +3,6 @@ package io.classwarfare;
 
 import java.util.ArrayList;
 
-
-/**
- * Created by zihaocastine on 5/11/16.
- */
 public class Hand {
     ArrayList<Card> cardList=new ArrayList<Card>();
 
@@ -23,5 +19,6 @@ public class Hand {
 
         return totalValue;
     }
+
 
 }
