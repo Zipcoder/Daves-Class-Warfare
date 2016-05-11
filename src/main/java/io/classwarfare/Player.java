@@ -27,5 +27,5 @@ public class Player {
     public void collectWinnings(double amount){
         this.wallet+=amount;
     }
-
+    
 }
