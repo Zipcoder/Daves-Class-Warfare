@@ -23,7 +23,7 @@ public class RussianRoulette extends Game{
         Scanner input= new Scanner(System.in);
         String s="";
         int chamberNumber =(random.nextInt(6)+1);
-      
+
         while(chamberNumber>0){
             /**
              * player pull trigger
@@ -39,8 +39,8 @@ public class RussianRoulette extends Game{
                 /**
                  * dealer pull trigger
                  */
-                System.out.print("Dealer pull trigger");
-                delayOutput("");
+                delayOutput("Dealer pull trigger");
+
                 if(PullTrigger(chamberNumber)){
                     player.collectWinnings(pay(5000));
                     System.out.println("Now you have all you money back, get the fuck out here");
