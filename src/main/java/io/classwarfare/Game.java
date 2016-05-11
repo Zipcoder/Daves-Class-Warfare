@@ -5,7 +5,7 @@ package io.classwarfare;
  */
 public abstract class Game {
     private double payOut;
-    private static double wallet;
+    private static double wallet=2000000;
 
 
     public void start(Game game){
@@ -17,4 +17,11 @@ public abstract class Game {
     public abstract double pay(double amount);
     public abstract void play();
 
+    public double getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(double value) {
+        wallet=value;
+    }
 }
