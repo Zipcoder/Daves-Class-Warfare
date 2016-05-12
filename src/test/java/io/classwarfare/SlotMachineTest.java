@@ -42,7 +42,7 @@ public class SlotMachineTest {
     public void playerBetDeductionTest(){
         Player deductionPlayer = new Player();
         SlotMachine slotsBetTest = new SlotMachine(deductionPlayer);
-        double expectedValue = 50;
+        double expectedValue = 5;
         slotsBetTest
         double actualValue = 4950;
     }*/
