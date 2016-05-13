@@ -17,23 +17,20 @@ public class Blackjack extends Game {
     boolean bustCheck;
     boolean hitAndStayPhase;
     boolean dealerStayCheck;
-    boolean playingGame;
-
+    Scanner input;
+    boolean gameInSession;
     public Blackjack(Player player){
         this.player = player;
     }
 
 
     public void play() {
-        printWelcome();
-        Scanner input = new Scanner(System.in);
-        boolean gameInSession = true;
+
+        input = new Scanner(System.in);
+        gameInSession = true;
         Player player = new Player();
         while (gameInSession && player.showBalance()>0) {
-            if(player.showBalance()<=0){
-                System.out.println("You are out of money, get out of here ya bum!");
-                break;
-            }
+
             deck= new Deck();
             playerHand = new Hand();
             dealerHand = new Hand();
@@ -42,9 +39,6 @@ public class Blackjack extends Game {
             bustCheck = false;
             dealerStayCheck = false;
             winningHand=new Hand();
-            double blackJackPayMod = 0;
-
-            double bet = placeBets(input);
 
             deal();
             if(!checkForBlackJack()){
@@ -61,8 +55,8 @@ public class Blackjack extends Game {
                 chooseHitOrStay(input);
                 if (dealerStayCheck){hitAndStayPhase=false;}
             }
-            decideWinner(bet);
-            askToPlayAgain(input,gameInSession);
+            decideWinner();
+            askToPlayAgain(input);
         }
     }
 
@@ -85,19 +79,22 @@ public class Blackjack extends Game {
         }
     }
 
-    public void askToPlayAgain(Scanner input,boolean gameInSession){
+    public void askToPlayAgain(Scanner input){
         System.out.println("Your new balance is " + player.showBalance() + " Would you like to play again? 1 for Yes, 2 for No");
         int playAgain = input.nextInt();
+        if(playAgain==1){
+            placeBet();
+        }
         if (playAgain==2){
             System.out.println("Thank you for playing, enjoy your day!");
             gameInSession = false;
         }
     }
 
-    public void decideWinner(double bet){
+    public void decideWinner(){
         if (winningHand == playerHand) {
             System.out.println("You Win!");
-            player.collectWinnings(bet * 2);
+            player.collectWinnings(player.getBet() * 2);
         } else if (winningHand == dealerHand) {
             if(dealerHand.checkValue()<=21) {
                 System.out.println("Dealer has " + dealerHand.checkValue() + " You Lose!");
@@ -197,35 +194,26 @@ public class Blackjack extends Game {
         System.out.println(" for a total of "+ playerHand.checkValue());
     }
 
-    public double placeBets(Scanner input){
-        System.out.println("Your balance is "+player.showBalance()+" place your bet");
-        double bet = input.nextDouble();
+    private void placeBet(){
+            double bet=0;
 
-        while(bet>player.showBalance()){
-            System.out.println("You don't have that much money, you only have "+player.showBalance()+" Please place another bet");
-            bet = input.nextDouble();
+            try {
+                System.out.print("Enter your bet (-1 to exit):");
+                bet=input.nextInt();
+
+                if(bet<=player.getWallet()) {
+                    player.placeBet(bet);
+                }else {
+                    System.out.println("Your bet is greater than you balance");
+                    placeBet();
+                }
+            }catch (Exception e){
+                System.out.println("Please enter a Integer");
+                input.nextLine();
+                placeBet();
+            }
+
         }
-        player.placeBet(bet);
-        return bet;
-    }
-
-    public void printWelcome(){
-        System.out.println("____    __    ____  _______  __        ______   ______   .___  ___.  _______    .___________.  ______      ");
-        System.out.println("\\   \\  /  \\  /   / |   ____||  |      /      | /  __  \\  |   \\/   | |   ____|   |           | /  __  \\     ");
-        System.out.println(" \\   \\/    \\/   /  |  |__   |  |     |  ,----'|  |  |  | |  \\  /  | |  |__      `---|  |----`|  |  |  |    ");
-        System.out.println("  \\            /   |   __|  |  |     |  |     |  |  |  | |  |\\/|  | |   __|         |  |     |  |  |  |    ");
-        System.out.println("   \\    /\\    /    |  |____ |  `----.|  `----.|  `--'  | |  |  |  | |  |____        |  |     |  `--'  |    ");
-        System.out.println("    \\__/  \\__/     |_______||_______| \\______| \\______/  |__|  |__| |_______|       |__|      \\______/    ");
-        System.out.println("                                                                                                          ");
-        System.out.println("      .______    __          ___       ______  __  ___        __       ___       ______  __  ___         ");
-        System.out.println("      |   _  \\  |  |        /   \\     /      ||  |/  /       |  |     /   \\     /      ||  |/  /         ");
-        System.out.println("      |  |_)  | |  |       /  ^  \\   |  ,----'|  '  /        |  |    /  ^  \\   |  ,----'|  '  /          ");
-        System.out.println("      |   _  <  |  |      /  /_\\  \\  |  |     |    <   .--.  |  |   /  /_\\  \\  |  |     |    <           ");
-        System.out.println("      |  |_)  | |  `----./  _____  \\ |  `----.|  .  \\  |  `--'  |  /  _____  \\ |  `----.|  .  \\         ");
-        System.out.println("      |______/  |_______/__/     \\__\\ \\______||__|\\__\\  \\______/  /__/     \\__\\ \\______||__|\\__\\        ");
-
-    }
-
 
 }
 

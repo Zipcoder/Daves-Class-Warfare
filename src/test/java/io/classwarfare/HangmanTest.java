@@ -12,7 +12,8 @@ public class HangmanTest {
 
     @Test
     public void checkTestStringEndsGame(){ //Checks if a correct guess will end the game
-        Hangman hangman = new Hangman();
+        Player player=new Player();
+        Hangman hangman = new Hangman(player);
         hangman.setAnswerWord("apple");
         boolean expectedValue = true;
         boolean actualValue = hangman.check("apple");
@@ -21,7 +22,8 @@ public class HangmanTest {
 
     @Test
     public void checkTestStringCaseSensitivity(){//Checks whether check() is case-insensitive
-        Hangman hangman = new Hangman();
+        Player player=new Player();
+        Hangman hangman = new Hangman(player);
         hangman.setAnswerWord("apple");
         boolean expectedValue = true;
         boolean actualValue = hangman.check("APPLE");
@@ -30,7 +32,8 @@ public class HangmanTest {
 
     @Test
     public void checkTestStringCaseSensitivityControl(){//Checks whether check() is case-insensitive
-        Hangman hangman = new Hangman();
+        Player player=new Player();
+        Hangman hangman = new Hangman(player);
         hangman.setAnswerWord("bluetick");
         boolean expectedValue = true;
         boolean actualValue = hangman.check("bluetick");
@@ -39,7 +42,8 @@ public class HangmanTest {
 
     @Test
     public void checkTestStringCaseSensitivityWrongGuess(){//Checks whether check() is case-insensitive
-        Hangman hangman = new Hangman();
+        Player player=new Player();
+        Hangman hangman = new Hangman(player);
         hangman.setAnswerWord("apple");
         boolean expectedValue = false;
         boolean actualValue = hangman.check("Thumposaurus");
@@ -65,7 +69,8 @@ public class HangmanTest {
 
     @Test
     public void checkArrayTestAlreadyGuessCorrectly(){
-        Hangman hangman = new Hangman();
+        Player player=new Player();
+        Hangman hangman = new Hangman(player);
         hangman.addToCorrectGuesses('z');
         boolean expectedValue = false;
         boolean actualValue = hangman.check('k');
@@ -74,7 +79,8 @@ public class HangmanTest {
 
     @Test
     public void checkCorrectGuessesTest(){
-        Hangman hangman = new Hangman();
+        Player player=new Player();
+        Hangman hangman = new Hangman(player);
         hangman.addToCorrectGuesses('a');
         boolean expectedValue = true;
         boolean actualValue = hangman.checkCorrectGuesses('a');
@@ -83,7 +89,8 @@ public class HangmanTest {
 
     @Test
     public void checkIncorrectGuessesTest(){
-        Hangman hangman = new Hangman();
+        Player player=new Player();
+        Hangman hangman = new Hangman(player);
         hangman.addToIncorrectGuesses('a');
         boolean expectedValue = true;
         boolean actualValue = hangman.checkIncorrectGuesses('a');
@@ -92,7 +99,8 @@ public class HangmanTest {
 
     @Test
     public void addToCorrectGuessesTest(){
-        Hangman hangman = new Hangman();
+        Player player=new Player();
+        Hangman hangman = new Hangman(player);
         boolean expectedValue = false;
         //hangman.addToCorrectGuesses('a');
         boolean actualValue = hangman.checkCorrectGuesses('a'); //
@@ -101,7 +109,8 @@ public class HangmanTest {
 
     @Test
     public void addToIncorrectGuessesTest(){
-        Hangman hangman = new Hangman();
+        Player player=new Player();
+        Hangman hangman = new Hangman(player);
         boolean expectedValue = false;
         //hangman.addToIncorrectGuesses('a');
         boolean actualValue = hangman.checkIncorrectGuesses('a'); //
@@ -110,7 +119,8 @@ public class HangmanTest {
 
     @Test
     public void pickWordTest(){
-        Hangman hangman = new Hangman();
+        Player player=new Player();
+        Hangman hangman = new Hangman(player);
         String expectedValue = "beagle";
         String actualValue = hangman.pickWord();
         Assert.assertEquals("Did not return a value", expectedValue, actualValue);
@@ -118,14 +128,16 @@ public class HangmanTest {
 
     @Test
     public void randomNumberTest(){
-        Hangman hangman = new Hangman();
+        Player player=new Player();
+        Hangman hangman = new Hangman(player);
         Random rand = new Random(1);
 
     }
 
     @Test
     public  void getNumberOfGuessesTestIncorrectCharacter(){
-        Hangman hangman = new Hangman();
+        Player player=new Player();
+        Hangman hangman = new Hangman(player);
         int expectedValue = 1;
         hangman.check('z');
         int actualValue = hangman.getNumberOfGuesses();
@@ -134,7 +146,8 @@ public class HangmanTest {
 
     @Test
     public void getNumberOfGuessesTestCorrectCharacter(){
-        Hangman hangman = new Hangman();
+        Player player=new Player();
+        Hangman hangman = new Hangman(player);
         int expectedValue = 1;
         hangman.check('k');
         int actualValue = hangman.getNumberOfGuesses();
@@ -143,7 +156,8 @@ public class HangmanTest {
 
     @Test
     public void getNumberOfGuessesTestIncorrectWord(){
-        Hangman hangman = new Hangman();
+        Player player=new Player();
+        Hangman hangman = new Hangman(player);
         int expectedValue = 1;
         hangman.check("Thumposaurus");
         int actualValue = hangman.getNumberOfGuesses();
@@ -152,7 +166,8 @@ public class HangmanTest {
 
     @Test
     public void getNumberOfGuessesTestCorrectWord(){
-        Hangman hangman = new Hangman();
+        Player player=new Player();
+        Hangman hangman = new Hangman(player);
         int expectedValue = 1;
         hangman.check("Bluetick");
         int actualValue = hangman.getNumberOfGuesses();
@@ -161,7 +176,8 @@ public class HangmanTest {
 
     @Test
     public void getAnswerWordTest(){
-        Hangman hangman = new Hangman();
+        Player player=new Player();
+        Hangman hangman = new Hangman(player);
         hangman.setAnswerWord("beagle");
         String expectedValue = "beagle";
         String actualValue = hangman.getAnswerWord();
@@ -170,7 +186,8 @@ public class HangmanTest {
 
     @Test
     public void pickWordTestII(){
-        Hangman hangman = new Hangman();
+        Player player=new Player();
+        Hangman hangman = new Hangman(player);
         //hangman.answerWord = hangman.pickWord();
         String expectedValue = "beagle";
         String actualValue = hangman.getAnswerWord();
@@ -179,7 +196,8 @@ public class HangmanTest {
 
     @Test
     public void setDisplayArrayTest(){
-        Hangman hangman = new Hangman();
+        Player player=new Player();
+        Hangman hangman = new Hangman(player);
         hangman.setAnswerArray(hangman.getAnswerWord().toCharArray());
         hangman.setDisplayArray();
         int expectedValue = 6;
