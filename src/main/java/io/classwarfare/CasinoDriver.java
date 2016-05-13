@@ -21,7 +21,7 @@ public class CasinoDriver {
          */
         player=new Player();
 
-        Blackjack blackjack=new Blackjack();
+        Blackjack blackjack=new Blackjack(player);
         slotMachine=new SlotMachine(player);
         russianRoulette=new RussianRoulette(player);
 
