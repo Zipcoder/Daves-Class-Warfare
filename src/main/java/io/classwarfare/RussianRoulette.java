@@ -15,36 +15,45 @@ import java.util.concurrent.TimeUnit;
  */
 public class RussianRoulette extends Game{
     Player player;
+    protected int chamberNumber;
+
+    /**
+     *                     CONSTRUCTOR
+     * @param player
+     */
     RussianRoulette(Player player){
-        this.player=player;
+        this.player = player;
     }
+
+    /**
+     *                   METHOD TO PLAY GAME
+     */
     public void play() {
-        Random random=new Random();
-        Scanner input= new Scanner(System.in);
-        String s="";
-        int chamberNumber =(random.nextInt(6)+1);
+        Random random = new Random();
+        Scanner input = new Scanner(System.in);
+        chamberNumber =(random.nextInt(6)+1);
 
-
-        while(chamberNumber>0){
-            /**
-             * player pull trigger
-             */
+        /**
+         *            PULLING TRIGGER WHILE THERE ARE CHAMBERS LEFT
+         *            PULL AT CHAMBER 1 AND GUN FIRES.
+         */
+        while(chamberNumber > 0){
 
             System.out.println("Press any key to pull trigger");
             input.nextLine();
-            if(PullTrigger(chamberNumber)){
+
+            //Player pulling trigger
+            if(pullTrigger(chamberNumber)){
                 delayOutput("You dead!");
                 System.exit(0);
             }else{
                 chamberNumber--;
-                /**
-                 * dealer pull trigger
-                 */
-                delayOutput("Dealer pull trigger");
 
-                if(PullTrigger(chamberNumber)){
+                delayOutput("Dealer pulls the trigger");
+                //Dealer pulling trigger
+                if(pullTrigger(chamberNumber)){
                     player.collectWinnings(pay(5000));
-                    System.out.println("Now you have all you money back.");
+                    System.out.println("Now you have all your money back.");
                     System.exit(0);
                 }else{
                     chamberNumber--;
@@ -54,8 +63,14 @@ public class RussianRoulette extends Game{
         }
     }
 
-    private boolean PullTrigger(int num){
-        if(num<2){
+    /**
+     *               PASSES CHAMBER NUMBER IN, IF IT IS THE LAST CHAMBER THEN
+     *               CHANGES BOOLEAN TO FIRE GUN IN LOOP
+     * @param num
+     * @return
+     */
+    protected boolean pullTrigger(int num){
+        if(num < 2){
             playGunshot();
             return true;
         }else {
@@ -65,7 +80,7 @@ public class RussianRoulette extends Game{
     }
 
     /**
-     * play gun shot sound
+     *                  play gun shot sound
      */
     private void playGunshot(){
         URL test = null;
@@ -80,7 +95,7 @@ public class RussianRoulette extends Game{
     }
 
     /**
-     * play dry fire shot sound
+     *               play dry fire shot sound
      */
     private void playDryFireshot(){
         URL test = null;
@@ -92,6 +107,7 @@ public class RussianRoulette extends Game{
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+
     }
     public double pay(double amount) {
         return amount;
