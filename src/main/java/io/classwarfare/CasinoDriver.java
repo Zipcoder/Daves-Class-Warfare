@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 public class CasinoDriver {
     RussianRoulette russianRoulette;
     Player player;
+    SlotMachine slotMachine;
     public static void main(String[] args) {
         CasinoDriver casinoDriver=new CasinoDriver();
         casinoDriver.start();
@@ -21,7 +22,7 @@ public class CasinoDriver {
         player=new Player();
 
         Blackjack blackjack=new Blackjack();
-        SlotMachine slotMachine=new SlotMachine();
+        slotMachine=new SlotMachine(player);
         russianRoulette=new RussianRoulette(player);
 
         Scanner input=new Scanner(System.in);
@@ -85,18 +86,30 @@ public class CasinoDriver {
         String choice="";
         System.out.print("Enter: ");
         choice=input.next();
-        switch (choice){
-            case "1":
-                break;
-            case "2":
-                break;
-            case "3":
-                break;
-            case "4":russianRoulette.play();
-            default:
-                break;
-
+        while(!choice.equals("-1")) {
+            switch (choice) {
+                case "1":
+                    break;
+                case "2":
+                    player.placeBet(100);
+                    slotMachine.play();
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    russianRoulette.play();
+                    break;
+                case "5":
+                    System.out.println("You current balance is "+player.getWallet());
+                default:
+                    break;
+            }
+            System.out.println("Please choice a game (-1 to exit)"+
+                    "\n1)Blackjack\n2)Slot Machine\n3)Hangman\n5)Check balance");
+            System.out.print("Enter: ");
+            choice=input.next();
         }
+
         return false;
     }
 }

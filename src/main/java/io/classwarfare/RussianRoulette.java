@@ -24,6 +24,7 @@ public class RussianRoulette extends Game{
         String s="";
         int chamberNumber =(random.nextInt(6)+1);
 
+
         while(chamberNumber>0){
             /**
              * player pull trigger
@@ -43,19 +44,14 @@ public class RussianRoulette extends Game{
 
                 if(PullTrigger(chamberNumber)){
                     player.collectWinnings(pay(5000));
-                    System.out.println("Now you have all you money back, get the fuck out here");
+                    System.out.println("Now you have all you money back.");
                     System.exit(0);
                 }else{
                     chamberNumber--;
                     delayOutput("");
                 }
             }
-           // delayOutput("");
-
-
-
         }
-
     }
 
     private boolean PullTrigger(int num){
@@ -67,9 +63,6 @@ public class RussianRoulette extends Game{
             return false;
         }
     }
-
-
-
 
     /**
      * play gun shot sound

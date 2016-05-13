@@ -15,6 +15,7 @@ public class Player {
         counter++;
     }
     public void placeBet(double bet){
+        this.bet=bet;
         this.wallet-=bet;
     }
 
@@ -24,6 +25,14 @@ public class Player {
 
     public void collectWinnings(double amount){
         this.wallet+=amount;
+    }
+
+    public double getBet(){
+        return bet;
+    }
+
+    public double getWallet(){
+        return wallet;
     }
 
 }
