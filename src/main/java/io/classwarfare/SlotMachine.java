@@ -86,7 +86,7 @@ public class SlotMachine extends Game{
     public double pay(double value) {
         if(checkTumblers()==true) {
             System.out.println(winString);
-            System.out.println("\nYou win!" + SlotMachineGraphics.sepLine);
+            System.out.println("\nYou win! Payout is " + payOut + SlotMachineGraphics.sepLine);
             super.setWallet(super.getWallet()-payOut);
             return value;
         }
