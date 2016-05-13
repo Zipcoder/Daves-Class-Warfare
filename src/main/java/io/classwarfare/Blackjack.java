@@ -34,9 +34,11 @@ public class Blackjack extends Game {
             boolean gameInPlay = true;
             Hand winningHand = dealerHand;
             System.out.println("Your balance is "+player.showBalance()+" place your bet");
-
             double bet = input.nextDouble();
-
+            while(bet>player.showBalance()){
+                System.out.println("You don't have that much money, Please place another bet");
+                bet = input.nextDouble();
+            }
             double blackJackPayMod = 0;
             player.placeBet(bet);
             deal(playerHand, dealerHand, deck);
@@ -53,17 +55,19 @@ public class Blackjack extends Game {
             }
             while (gameInPlay) {
                 if (checkBust(playerHand)) {
+                    System.out.println("You Busted!");
                     winningHand = dealerHand;
                     break;
                 }
                 if (checkBust(dealerHand)) {
+                    System.out.println("Dealer Busted!");
                     winningHand = playerHand;
                     break;
                 }
                 winningHand = compareHands(playerHand, dealerHand);
-                System.out.print("Dealer showing card is " + dealerHand.cardList.get(0).getValue() + "\nYour hand is a ");
+                System.out.print("Dealer showing card is " + dealerHand.cardList.get(0).getValue()+" of "+dealerHand.cardList.get(0).getSuit()+"\nYour hand is a ");
                 for(int i =0;i<playerHand.cardList.size();i++){
-                    System.out.print(playerHand.cardList.get(i).getValue()+" ");
+                    System.out.print(playerHand.cardList.get(i).getValue()+" of "+playerHand.cardList.get(i).getSuit());
                 }
                 System.out.println(" for a total of "+ playerHand.checkValue() + " Press 1 for Hit, 2 for Stay");
                 int hitOrStay = input.nextInt();
@@ -85,7 +89,7 @@ public class Blackjack extends Game {
                 System.out.println("You Win!");
                 player.collectWinnings(bet * 2 + blackJackPayMod);
             } else if (winningHand == dealerHand) {
-                System.out.println("Dealer has"+dealerHand.checkValue()+"You Lose!");
+                System.out.println("Dealer has "+dealerHand.checkValue()+" You Lose!");
             }
             System.out.println("Your new balance is " + player.showBalance() + " Would you like to play again? 1 for Yes, 2 for No");
             int playAgain = input.nextInt();
@@ -151,7 +155,6 @@ public class Blackjack extends Game {
     // hit method adds a card to the Hand that is passed into it
     public void hit(Hand hand, Deck deck) {
         hand.cardList.add(deck.cards.get(cardsPulledFromDeck));
+        cardsPulledFromDeck++;
     }
-
-
 }
