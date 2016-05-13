@@ -14,9 +14,7 @@ public abstract class Game {
     public abstract double pay(double amount);
     public abstract void play();
 
-<<<<<<< HEAD
 
-=======
     public double getWallet() {
         return wallet;
     }
@@ -24,5 +22,4 @@ public abstract class Game {
     public void setWallet(double value) {
         wallet=value;
     }
->>>>>>> test_merge
 }
