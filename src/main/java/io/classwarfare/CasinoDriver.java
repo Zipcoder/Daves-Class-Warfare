@@ -27,7 +27,7 @@ public class CasinoDriver {
         blackjack=new Blackjack(player);
         slotMachine=new SlotMachine(player);
         russianRoulette=new RussianRoulette(player);
-        hangman=new Hangman();
+        hangman=new Hangman(player);
         String choice="";
         printLogo();
         System.out.println("Welcome to Great Wall Casino");
@@ -69,6 +69,23 @@ public class CasinoDriver {
 
     }
 
+    public void printBlackJackWelcome(){
+        System.out.println("____    __    ____  _______  __        ______   ______   .___  ___.  _______    .___________.  ______      ");
+        System.out.println("\\   \\  /  \\  /   / |   ____||  |      /      | /  __  \\  |   \\/   | |   ____|   |           | /  __  \\     ");
+        System.out.println(" \\   \\/    \\/   /  |  |__   |  |     |  ,----'|  |  |  | |  \\  /  | |  |__      `---|  |----`|  |  |  |    ");
+        System.out.println("  \\            /   |   __|  |  |     |  |     |  |  |  | |  |\\/|  | |   __|         |  |     |  |  |  |    ");
+        System.out.println("   \\    /\\    /    |  |____ |  `----.|  `----.|  `--'  | |  |  |  | |  |____        |  |     |  `--'  |    ");
+        System.out.println("    \\__/  \\__/     |_______||_______| \\______| \\______/  |__|  |__| |_______|       |__|      \\______/    ");
+        System.out.println("                                                                                                          ");
+        System.out.println("      .______    __          ___       ______  __  ___        __       ___       ______  __  ___         ");
+        System.out.println("      |   _  \\  |  |        /   \\     /      ||  |/  /       |  |     /   \\     /      ||  |/  /         ");
+        System.out.println("      |  |_)  | |  |       /  ^  \\   |  ,----'|  '  /        |  |    /  ^  \\   |  ,----'|  '  /          ");
+        System.out.println("      |   _  <  |  |      /  /_\\  \\  |  |     |    <   .--.  |  |   /  /_\\  \\  |  |     |    <           ");
+        System.out.println("      |  |_)  | |  `----./  _____  \\ |  `----.|  .  \\  |  `--'  |  /  _____  \\ |  `----.|  .  \\         ");
+        System.out.println("      |______/  |_______/__/     \\__\\ \\______||__|\\__\\  \\______/  /__/     \\__\\ \\______||__|\\__\\        ");
+
+    }
+
     /**
      * Delay the output by 100 milliseconds
      * @param s
@@ -91,13 +108,14 @@ public class CasinoDriver {
         while(!choice.equals("-1")) {
             switch (choice) {
                 case "1":
-                    blackjack.play();
+                    printBlackJackWelcome();
+                    playBlackJack();
                     break;
                 case "2":
                     playSlotMachine();
                     break;
                 case "3":
-                    hangman.play();
+                    playHangman();
                     break;
                 case "4":
                     russianRoulette.play();
@@ -127,12 +145,37 @@ public class CasinoDriver {
 
     }
 
+    private void playBlackJack(){
+
+        while((int)player.getBet()!=-1){
+            placeBet();
+            if(player.getBet()!=-1.0){
+                blackjack.play();
+            }
+        }
+
+    }
+
+    private void playHangman(){
+
+        while((int)player.getBet()!=-1){
+            placeBet();
+            if(player.getBet()!=-1.0){
+                 hangman.play();
+            }
+        }
+        player.collectWinnings(-1);
+
+    }
+
+
     private void placeBet(){
         double bet=0;
 
         try {
-            System.out.print("Enter your bet :");
+            System.out.print("Enter your bet (-1 to exit):");
             bet=input.nextInt();
+
             if(bet<=player.getWallet()) {
                 player.placeBet(bet);
             }else {

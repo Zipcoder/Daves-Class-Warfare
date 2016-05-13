@@ -19,7 +19,11 @@ public class Hangman extends Game {
     private char[] displayArray;
     private boolean win = false;
     private int randomNumber;
+    private Player player;
 
+    Hangman(Player player){
+        this.player=player;
+    }
     public char[] getAnswerArray() {
         return answerArray;
     }
@@ -82,6 +86,7 @@ public class Hangman extends Game {
     public void checkNumberOfGuesses() {
         if (numberOfGuesses >= 7) {
             win = true;
+            player.collectWinnings(player.getBet()*3);
             putToDisplay("You're dead!!!\nGAME OVER\n");
         }
     }
@@ -95,6 +100,7 @@ public class Hangman extends Game {
             getUserInput();
             updateDisplayArray();
         }
+
     }
 
     @Override
@@ -116,6 +122,8 @@ public class Hangman extends Game {
         if (complete) {
             putToDisplay("YOU WIN!\nGAME OVER\n");
             win = true;
+            player.collectWinnings(player.getBet()*3);
+
         }
     }
 
@@ -126,6 +134,7 @@ public class Hangman extends Game {
         if (guess.equals(answerWord)) {
             putToDisplay("Hey, your guess was correct! \n GAME OVER\n");
             win = true;
+            player.collectWinnings(player.getBet()*3);
             return true;
         } else {
             putToDisplay("Sorry, that's not the answer!");
