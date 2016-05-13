@@ -200,11 +200,12 @@ public class Blackjack extends Game {
     public double placeBets(Scanner input){
         System.out.println("Your balance is "+player.showBalance()+" place your bet");
         double bet = input.nextDouble();
-        player.placeBet(bet);
+
         while(bet>player.showBalance()){
             System.out.println("You don't have that much money, you only have "+player.showBalance()+" Please place another bet");
             bet = input.nextDouble();
         }
+        player.placeBet(bet);
         return bet;
     }
 

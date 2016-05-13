@@ -91,6 +91,7 @@ public class CasinoDriver {
         while(!choice.equals("-1")) {
             switch (choice) {
                 case "1":
+                    blackjack.play();
                     break;
                 case "2":
                     playSlotMachine();
