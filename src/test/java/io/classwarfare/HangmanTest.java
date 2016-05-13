@@ -10,32 +10,38 @@ import java.util.Random;
  */
 public class HangmanTest {
 
-
+    @Test
     public void checkTestStringEndsGame(){ //Checks if a correct guess will end the game
         Hangman hangman = new Hangman();
+        hangman.setAnswerWord("apple");
         boolean expectedValue = true;
-        boolean actualValue = hangman.check("bluetick");
+        boolean actualValue = hangman.check("apple");
         Assert.assertEquals("Expected value: true", expectedValue, actualValue);
     }
 
+    @Test
     public void checkTestStringCaseSensitivity(){//Checks whether check() is case-insensitive
         Hangman hangman = new Hangman();
+        hangman.setAnswerWord("apple");
         boolean expectedValue = true;
-        boolean actualValue = hangman.check("Bluetick");
+        boolean actualValue = hangman.check("APPLE");
         Assert.assertEquals("Expected value: true", expectedValue, actualValue);
     }
 
+    @Test
     public void checkTestStringCaseSensitivityControl(){//Checks whether check() is case-insensitive
         Hangman hangman = new Hangman();
+        hangman.setAnswerWord("bluetick");
         boolean expectedValue = true;
         boolean actualValue = hangman.check("bluetick");
         Assert.assertEquals("Expected value: true", expectedValue, actualValue);
     }
 
-
+    @Test
     public void checkTestStringCaseSensitivityWrongGuess(){//Checks whether check() is case-insensitive
         Hangman hangman = new Hangman();
-        boolean expectedValue = true;
+        hangman.setAnswerWord("apple");
+        boolean expectedValue = false;
         boolean actualValue = hangman.check("Thumposaurus");
         Assert.assertEquals("Expected value: true", expectedValue, actualValue);
     }
@@ -57,6 +63,7 @@ public class HangmanTest {
     }
     */
 
+    @Test
     public void checkArrayTestAlreadyGuessCorrectly(){
         Hangman hangman = new Hangman();
         hangman.addToCorrectGuesses('z');
@@ -65,21 +72,25 @@ public class HangmanTest {
         Assert.assertEquals("Expected value: true", expectedValue, actualValue);
     }
 
+    @Test
     public void checkCorrectGuessesTest(){
         Hangman hangman = new Hangman();
+        hangman.addToCorrectGuesses('a');
         boolean expectedValue = true;
         boolean actualValue = hangman.checkCorrectGuesses('a');
         Assert.assertEquals("Expected value: true", expectedValue, actualValue);
     }
 
+    @Test
     public void checkIncorrectGuessesTest(){
         Hangman hangman = new Hangman();
-        //hangman.incorrectGuesses.add('a');
+        hangman.addToIncorrectGuesses('a');
         boolean expectedValue = true;
         boolean actualValue = hangman.checkIncorrectGuesses('a');
         Assert.assertEquals("Expected value: true", expectedValue, actualValue);
     }
 
+    @Test
     public void addToCorrectGuessesTest(){
         Hangman hangman = new Hangman();
         boolean expectedValue = false;
@@ -88,6 +99,7 @@ public class HangmanTest {
         Assert.assertEquals("Expected value: true", expectedValue, actualValue);
     }
 
+    @Test
     public void addToIncorrectGuessesTest(){
         Hangman hangman = new Hangman();
         boolean expectedValue = false;
@@ -96,14 +108,7 @@ public class HangmanTest {
         Assert.assertEquals("Expected value: true", expectedValue, actualValue);
     }
 
-    public void firstWordTest(){
-        Hangman hangman = new Hangman();
-        String expectedValue = hangman.wordBank[0];
-        String actualValue = "beagle";
-        Assert.assertEquals("Expected value: beagle", expectedValue, actualValue);
-    }
-
-
+    @Test
     public void pickWordTest(){
         Hangman hangman = new Hangman();
         String expectedValue = "beagle";
@@ -111,20 +116,14 @@ public class HangmanTest {
         Assert.assertEquals("Did not return a value", expectedValue, actualValue);
     }
 
-    public void wordbankLengthTest(){
-    Hangman hangman = new Hangman();
-        int expectedValue = 2;
-        int actualValue = hangman.wordBank.length;
-        Assert.assertEquals("Expected value: 2", expectedValue, actualValue);
-    }
-
+    @Test
     public void randomNumberTest(){
         Hangman hangman = new Hangman();
         Random rand = new Random(1);
 
     }
 
-
+    @Test
     public  void getNumberOfGuessesTestIncorrectCharacter(){
         Hangman hangman = new Hangman();
         int expectedValue = 1;
@@ -133,15 +132,16 @@ public class HangmanTest {
         Assert.assertEquals("Expected value: 1", expectedValue, actualValue);
     }//PASSED
 
-
+    @Test
     public void getNumberOfGuessesTestCorrectCharacter(){
         Hangman hangman = new Hangman();
-        int expectedValue = 0;
+        int expectedValue = 1;
         hangman.check('k');
         int actualValue = hangman.getNumberOfGuesses();
         Assert.assertEquals("Expected value: 0", expectedValue, actualValue);
     }//PASSED
 
+    @Test
     public void getNumberOfGuessesTestIncorrectWord(){
         Hangman hangman = new Hangman();
         int expectedValue = 1;
@@ -150,21 +150,25 @@ public class HangmanTest {
         Assert.assertEquals("Expected value: 1", expectedValue, actualValue);
     }//PASSED
 
+    @Test
     public void getNumberOfGuessesTestCorrectWord(){
         Hangman hangman = new Hangman();
-        int expectedValue = 0;
+        int expectedValue = 1;
         hangman.check("Bluetick");
         int actualValue = hangman.getNumberOfGuesses();
         Assert.assertEquals("Expected value: 0", expectedValue, actualValue);
     }//PASSED
 
+    @Test
     public void getAnswerWordTest(){
         Hangman hangman = new Hangman();
-        String expectedValue = "bluetick";
+        hangman.setAnswerWord("beagle");
+        String expectedValue = "beagle";
         String actualValue = hangman.getAnswerWord();
-        Assert.assertEquals("Expected value: bluetick", expectedValue, actualValue);
+        Assert.assertEquals("Expected value: beagle", expectedValue, actualValue);
     }//PASSED
 
+    @Test
     public void pickWordTestII(){
         Hangman hangman = new Hangman();
         //hangman.answerWord = hangman.pickWord();
@@ -173,35 +177,13 @@ public class HangmanTest {
         Assert.assertEquals("ExpectedValue: beagle", expectedValue, actualValue);
     }//PASSED
 
-    public void getUserInputTest(){
-        Hangman hangman = new Hangman();
-        boolean expectedValue = true;
-        boolean actualValue = hangman.getUserInput();
-        Assert.assertEquals("Expected value: true", expectedValue, actualValue);
-    }
-
-
+    @Test
     public void setDisplayArrayTest(){
         Hangman hangman = new Hangman();
-        hangman.answerArray = hangman.answerWord.toCharArray();
+        hangman.setAnswerArray(hangman.getAnswerWord().toCharArray());
         hangman.setDisplayArray();
-        int expectedValue = 200;
+        int expectedValue = 6;
         int actualValue = hangman.getDisplayArrayLength();
         Assert.assertEquals("Expected value: 6", expectedValue, actualValue);
-    }//PASSED
-    /*
-    public void guessLetterTest(){
-        Hangman hangman = new Hangman();
-        char expectedValue = ; //WHAT SHOULD THIS BE???
-        char actualValue = hangman.guessLetter();
-        Assert.assertEquals("Expected value: ", expectedValue, actualValue);
     }
-
-    public void guessWordTest(){
-        Hangman hangman = new Hangman();
-        String expectedValue = ; //WHAT SHOULD THIS BE???
-        String actualValue = hangman.guessWord();
-        Assert.assertEquals("Expected value: ", expectedValue, actualValue);
-    }
-    */
 }

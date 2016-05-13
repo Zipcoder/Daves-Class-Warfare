@@ -10,6 +10,8 @@ public class CasinoDriver {
     RussianRoulette russianRoulette;
     Player player;
     SlotMachine slotMachine;
+    Blackjack blackjack;
+    Hangman hangman;
     Scanner input=new Scanner(System.in);
     public static void main(String[] args) {
         CasinoDriver casinoDriver=new CasinoDriver();
@@ -22,10 +24,10 @@ public class CasinoDriver {
          */
         player=new Player();
 
-        Blackjack blackjack=new Blackjack(player);
+        blackjack=new Blackjack(player);
         slotMachine=new SlotMachine(player);
         russianRoulette=new RussianRoulette(player);
-
+        hangman=new Hangman();
         String choice="";
         printLogo();
         System.out.println("Welcome to Great Wall Casino");
@@ -73,7 +75,7 @@ public class CasinoDriver {
      */
     private void delayOutput(String s){
         try {
-            TimeUnit.MILLISECONDS.sleep(0);
+            TimeUnit.MILLISECONDS.sleep(25);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -83,17 +85,19 @@ public class CasinoDriver {
     private boolean choiceGame(){
         Scanner input=new Scanner(System.in);
         String choice="";
-        System.out.println("Please choice a game \n"+ "1)Blackjack\n2)Slot Machine\n3)Hangman");
+        System.out.println("Please choose a game \n"+ "1)Blackjack\n2)Slot Machine\n3)Hangman\n");
         System.out.print("Enter: ");
         choice=input.next();
         while(!choice.equals("-1")) {
             switch (choice) {
                 case "1":
+                    blackjack.play();
                     break;
                 case "2":
                     playSlotMachine();
                     break;
                 case "3":
+                    hangman.play();
                     break;
                 case "4":
                     russianRoulette.play();
