@@ -11,7 +11,7 @@ public abstract class Game {
     }
 
     public abstract void backToMenu();
-    public abstract double pay(double amount);
+
     public abstract void play();
 
 
