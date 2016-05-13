@@ -10,6 +10,7 @@ public class CasinoDriver {
     RussianRoulette russianRoulette;
     Player player;
     SlotMachine slotMachine;
+    Scanner input=new Scanner(System.in);
     public static void main(String[] args) {
         CasinoDriver casinoDriver=new CasinoDriver();
         casinoDriver.start();
@@ -25,11 +26,9 @@ public class CasinoDriver {
         slotMachine=new SlotMachine(player);
         russianRoulette=new RussianRoulette(player);
 
-        Scanner input=new Scanner(System.in);
         String choice="";
         printLogo();
-        System.out.println("Welcome to Great Wall Casino \nPlease choice a game\n"+
-                "1)Blackjack\n2)Slot Machine\n3)Hangman");
+        System.out.println("Welcome to Great Wall Casino");
         choiceGame();
 
     }
@@ -74,7 +73,7 @@ public class CasinoDriver {
      */
     private void delayOutput(String s){
         try {
-            TimeUnit.MILLISECONDS.sleep(100);
+            TimeUnit.MILLISECONDS.sleep(0);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -84,6 +83,7 @@ public class CasinoDriver {
     private boolean choiceGame(){
         Scanner input=new Scanner(System.in);
         String choice="";
+        System.out.println("Please choice a game \n"+ "1)Blackjack\n2)Slot Machine\n3)Hangman");
         System.out.print("Enter: ");
         choice=input.next();
         while(!choice.equals("-1")) {
@@ -91,8 +91,7 @@ public class CasinoDriver {
                 case "1":
                     break;
                 case "2":
-                    player.placeBet(100);
-                    slotMachine.play();
+                    playSlotMachine();
                     break;
                 case "3":
                     break;
@@ -101,7 +100,7 @@ public class CasinoDriver {
                     break;
                 case "5":
                     System.out.println("You current balance is "+player.getWallet());
-                default:
+                default:choiceGame();
                     break;
             }
             System.out.println("Please choice a game (-1 to exit)"+
@@ -111,5 +110,36 @@ public class CasinoDriver {
         }
 
         return false;
+    }
+
+    private void playSlotMachine(){
+
+        while((int)player.getBet()!=-1){
+            placeBet();
+            if(player.getBet()!=-1.0){
+                slotMachine.play();
+            }
+        }
+
+    }
+
+    private void placeBet(){
+        double bet=0;
+
+        try {
+            System.out.print("Enter your bet :");
+            bet=input.nextInt();
+            if(bet<=player.getWallet()) {
+                player.placeBet(bet);
+            }else {
+                System.out.println("Your bet is greater than you balance");
+                placeBet();
+            }
+        }catch (Exception e){
+            System.out.println("Please enter a double");
+            input.nextLine();
+            placeBet();
+        }
+
     }
 }

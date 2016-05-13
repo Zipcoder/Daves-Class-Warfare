@@ -8,9 +8,9 @@ import static org.junit.Assert.*;
  */
 public class CardTest {
 
-    @Test
+    @Test  //Check cards are constructed properly
     public void cardConstructionTest(){
-        Card testCard = new Card(Suit.SPADES,4,"");
+        Card testCard = new Card(Suit.SPADES,4,"","x");
         Suit expectedSuit = Suit.SPADES;
         int expectedValue = 4;
         String expectedFaceCard = "";

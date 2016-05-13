@@ -5,11 +5,10 @@ import java.util.*;
  */
 public class SlotMachine extends Game{
 
-    private static String[][] tumblers = {{"7","BAR","BAR","BAR","JAVA","JAVA","JAVA","JAVA","JAVA","JAVA"},
-            {"7","BAR","BAR","BAR","JAVA","JAVA","JAVA","JAVA","JAVA","JAVA"},
-            {"7","BAR","BAR","BAR","JAVA","JAVA","JAVA","JAVA","JAVA","JAVA"}};
+    private static String[][] tumblers = {{"7","BAR","BAR","JAVA","JAVA","JAVA"},{"7","BAR","BAR","JAVA","JAVA","JAVA"},{"7","BAR","BAR","JAVA","JAVA","JAVA"}};
+
     Player player;
-    private static int multiplier = 1;
+
     private static String winString;
     private static double payOut = 0;
     SlotMachine(Player currentPlayer){
@@ -22,7 +21,6 @@ public class SlotMachine extends Game{
     public void play() {
         takeBet(player.getBet());
         spinTumblers();
-        checkMultiplier();
         calculatePayout(player.getBet());
         player.collectWinnings(pay(payOut));
     }
@@ -55,7 +53,9 @@ public class SlotMachine extends Game{
      * @return int
      */
     private static double checkMultiplier() {
-        if(tumblers[0][0].equals("7")) {
+        if(checkTumblers()==false){
+            return 0;
+        } else if(tumblers[0][0].equals("7")) {
             winString = SlotMachineGraphics.sevenWin;
             return 5;
         }
@@ -66,8 +66,7 @@ public class SlotMachine extends Game{
         else if(tumblers[0][0].equals("JAVA")) {
             winString = SlotMachineGraphics.javaWin;
             return 1.5;
-        }
-        else {
+        } else {
             return 0;
         }
     }
@@ -77,7 +76,7 @@ public class SlotMachine extends Game{
      * @param value
      */
     private void calculatePayout(double value) {
-        payOut = value * multiplier;
+        payOut = value * checkMultiplier();
     }
 
     /**
@@ -90,6 +89,7 @@ public class SlotMachine extends Game{
             System.out.println(winString);
             System.out.println("You win!" + SlotMachineGraphics.sepLine);
             super.setWallet(super.getWallet()-payOut);
+
             return value;
         }
         else {
@@ -105,7 +105,7 @@ public class SlotMachine extends Game{
      */
     private void takeBet(double value) {
         super.setWallet(super.getWallet()+value);
-        //player.placeBet(value);
+
     }
 
     public void backToMenu(){

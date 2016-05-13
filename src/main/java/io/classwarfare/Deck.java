@@ -12,32 +12,55 @@ public class Deck {
      *  Deck constructor which adds for sets
      */
     Deck(){
-        addSuit(Suit.SPADES);
-        addSuit(Suit.CLUBS);
-        addSuit(Suit.DIAMONDS);
-        addSuit(Suit.HEARTS);
-        shuffle();
+        addSuitToDeck(Suit.SPADES);
+        addSuitToDeck(Suit.CLUBS);
+        addSuitToDeck(Suit.DIAMONDS);
+        addSuitToDeck(Suit.HEARTS);
+        shuffleCards();
     }
 
     /**
-     *  shuffles cards currently stored in cards array list
+     *  SHUFFLES CARDS CURRENTLY STORED IN CARDS ARRAYLIST
      */
-    public void shuffle(){
+    public void shuffleCards(){
         Collections.shuffle(cards);
     }
 
     /**
-     * @param suit object detailing the suit of a set of 13 cards
+     * @param suit METHOD ADDING 13 CARDS OF A SPECIFIED SUIT
      */
-    private void addSuit(Suit suit){
+    protected void addSuitToDeck(Suit suit){
+        String cardStructure = "|\n|    |";
+
         for(int i = 2; i < 11;i++){
-            cards.add(new Card(suit,i,""));
+
+            cards.add(new Card(suit,i,"",pickCardGraphic(suit)+i+cardStructure));
         }
-        cards.add(new Card(suit,11,"ACE"));
-        cards.add(new Card(suit,10,"KING"));
-        cards.add(new Card(suit,10,"QUEEN"));
-        cards.add(new Card(suit,10,"JACK"));
+        cards.add(new Card(suit,11,"ACE",pickCardGraphic(suit)+ "A" + cardStructure));
+        cards.add(new Card(suit,10,"KING",pickCardGraphic(suit)+ "K" + cardStructure));
+        cards.add(new Card(suit,10,"QUEEN",pickCardGraphic(suit)+ "Q" + cardStructure));
+        cards.add(new Card(suit,10,"JACK",pickCardGraphic(suit)+ "J" + cardStructure));
     }
 
-
+    /**
+     *  HELPER METHOD TO ASSIGN SUIT SYMBOLS FOR CARD GRAPHICS
+     */
+    private String pickCardGraphic(Suit suit){
+        String graphic = "";
+        switch(suit){
+            case SPADES:
+                graphic = "______\n|  "+"\u2660";
+                break;
+            case HEARTS:
+                graphic = "______\n|  "+"\u2665";
+                break;
+            case DIAMONDS:
+                graphic = "______\n|  "+"\u2666";
+                break;
+            case CLUBS:
+                graphic = "______\n|  "+"\u2663";
+                break;
+        }
+        return graphic;
+    }
 }
