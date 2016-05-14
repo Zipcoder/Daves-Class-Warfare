@@ -32,19 +32,4 @@ public class SlotMachineTest {
         assertNotEquals("Should deduct money from player wallet",expectedValue,actualValue);
     }
 
-    /*@Test
-    public void payoutTest() {
-        double expectedValue = 0;
-        double actualValue =
-    }
-
-    @Test
-    public void playerBetDeductionTest(){
-        Player deductionPlayer = new Player();
-        SlotMachine slotsBetTest = new SlotMachine(deductionPlayer);
-        double expectedValue = 50;
-        slotsBetTest
-        double actualValue = 4950;
-    }*/
-
 }

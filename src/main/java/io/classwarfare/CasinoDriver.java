@@ -1,7 +1,6 @@
 package io.classwarfare;
 
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by zihaocastine on 5/11/16.
@@ -32,75 +31,10 @@ public class CasinoDriver {
         russianRoulette = new RussianRoulette(player);
         hangman = new Hangman(player);
         String choice = "";
-        printLogo();
+        Graphics.printLogo();
         System.out.println("Welcome to Great Wall Casino");
         choiceGame();
 
-    }
-
-    /**
-     * print the wall on to the console.
-     */
-    private void printLogo() {
-        delayOutput("  _______ .______       _______      ___   .___________.   ____    __    ____  ___       __       __       ");
-        delayOutput(" /  _____||   _  \\     |   ____|    /   \\  |           |   \\   \\  /  \\  /   / /   \\     |  |     |  |       ");
-        delayOutput("|  |  __  |  |_)  |    |  |__      /  ^  \\ `---|  |----`    \\   \\/    \\/   / /  ^  \\    |  |     |  |       ");
-        delayOutput("|  | |_ | |      /     |   __|    /  /_\\  \\    |  |          \\            / /  /_\\  \\   |  |     |  |       ");
-        delayOutput("|  |__| | |  |\\  \\----.|  |____  /  _____  \\   |  |           \\    /\\    / /  _____  \\  |  `----.|  `----.  ");
-        delayOutput(" \\______| | _| `._____||_______|/__/     \\__\\  |__|            \\__/  \\__/ /__/     \\__\\ |_______||_______|  ");
-        delayOutput("");
-        delayOutput("                          ______      ___           _______. __  .__   __.   ______                         ");
-        delayOutput("                         /      |    /   \\         /       ||  | |  \\ |  |  /  __  \\                        ");
-        delayOutput("                        |  ,----'   /  ^  \\       |   (----`|  | |   \\|  | |  |  |  |                       ");
-        delayOutput("                        |  |       /  /_\\  \\       \\   \\    |  | |  . `  | |  |  |  |                       ");
-        delayOutput("                        |  `----. /  _____  \\  .----)   |   |  | |  |\\   | |  `--'  |                       ");
-        delayOutput("                         \\______|/__/     \\__\\ |_______/    |__| |__| \\__|  \\______/                        ");
-        delayOutput("");
-        delayOutput("");
-        delayOutput("____                                                                                                     _____");
-        delayOutput("|$  \\\\                                                                                                 // $  |");
-        delayOutput("|___//                                                                                                 \\\\____|");
-        delayOutput("|                                                                                                            |");
-        delayOutput("|                                                                                                            |");
-        delayOutput("_____     _____     _____     _____     _____     _____     _____     _____     _____     _____     _____    _       ");
-        delayOutput("|---|_____|---|_____|---|_____|---|_____|---|_____|---|_____|---|_____|---|_____|---|_____|---|_____|---|____|");
-        for (int x = 0; x < 5; x++) {
-
-            delayOutput("_|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|\n" +
-                    "___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|__");
-        }
-
-    }
-
-    public void printBlackJackWelcome() {
-        System.out.println("____    __    ____  _______  __        ______   ______   .___  ___.  _______    .___________.  ______      ");
-        System.out.println("\\   \\  /  \\  /   / |   ____||  |      /      | /  __  \\  |   \\/   | |   ____|   |           | /  __  \\     ");
-        System.out.println(" \\   \\/    \\/   /  |  |__   |  |     |  ,----'|  |  |  | |  \\  /  | |  |__      `---|  |----`|  |  |  |    ");
-        System.out.println("  \\            /   |   __|  |  |     |  |     |  |  |  | |  |\\/|  | |   __|         |  |     |  |  |  |    ");
-        System.out.println("   \\    /\\    /    |  |____ |  `----.|  `----.|  `--'  | |  |  |  | |  |____        |  |     |  `--'  |    ");
-        System.out.println("    \\__/  \\__/     |_______||_______| \\______| \\______/  |__|  |__| |_______|       |__|      \\______/    ");
-        System.out.println("                                                                                                          ");
-        System.out.println("      .______    __          ___       ______  __  ___        __       ___       ______  __  ___         ");
-        System.out.println("      |   _  \\  |  |        /   \\     /      ||  |/  /       |  |     /   \\     /      ||  |/  /         ");
-        System.out.println("      |  |_)  | |  |       /  ^  \\   |  ,----'|  '  /        |  |    /  ^  \\   |  ,----'|  '  /          ");
-        System.out.println("      |   _  <  |  |      /  /_\\  \\  |  |     |    <   .--.  |  |   /  /_\\  \\  |  |     |    <           ");
-        System.out.println("      |  |_)  | |  `----./  _____  \\ |  `----.|  .  \\  |  `--'  |  /  _____  \\ |  `----.|  .  \\         ");
-        System.out.println("      |______/  |_______/__/     \\__\\ \\______||__|\\__\\  \\______/  /__/     \\__\\ \\______||__|\\__\\        ");
-
-    }
-
-    /**
-     * Delay the output by 100 milliseconds
-     *
-     * @param s
-     */
-    private void delayOutput(String s) {
-        try {
-            TimeUnit.MILLISECONDS.sleep(25);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println(s);
     }
 
     private boolean choiceGame() {
@@ -112,7 +46,7 @@ public class CasinoDriver {
         while (!choice.equals("-1")) {
             switch (choice) {
                 case "1":
-                    printBlackJackWelcome();
+                    Graphics.printBlackJackWelcome();
                     playBlackJack();
                     break;
                 case "2":

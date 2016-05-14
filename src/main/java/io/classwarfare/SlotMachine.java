@@ -43,7 +43,7 @@ public class SlotMachine extends Game{
             return true;
         }
         else{
-            winString = SlotMachineGraphics.loseString;
+            winString = Graphics.loseString;
             return false;
         }
     }
@@ -56,15 +56,15 @@ public class SlotMachine extends Game{
         if(checkTumblers()==false){
             return 0;
         } else if(tumblers[0][0].equals("7")) {
-            winString = SlotMachineGraphics.sevenWin;
+            winString = Graphics.sevenWin;
             return 5;
         }
         else if(tumblers[0][0].equals("BAR")) {
-            winString = SlotMachineGraphics.barWin;
+            winString = Graphics.barWin;
             return 2;
         }
         else if(tumblers[0][0].equals("JAVA")) {
-            winString = SlotMachineGraphics.javaWin;
+            winString = Graphics.javaWin;
             return 1.5;
         } else {
             return 0;
@@ -87,14 +87,14 @@ public class SlotMachine extends Game{
     public double pay(double value) {
         if(checkTumblers()==true) {
             System.out.println(winString);
-            System.out.println("You win!" + SlotMachineGraphics.sepLine);
+            System.out.println("You win!" + Graphics.sepLine);
             super.setWallet(super.getWallet()-payOut);
 
             return value;
         }
         else {
             System.out.println(winString);
-            System.out.println("You lose! HAH!" + SlotMachineGraphics.sepLine);
+            System.out.println("You lose! HAH!" + Graphics.sepLine);
             return 0;
         }
     }
