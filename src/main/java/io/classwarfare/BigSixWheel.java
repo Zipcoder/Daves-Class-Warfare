@@ -24,6 +24,7 @@ public class BigSixWheel extends Game{
 
     @Override
     public void play() {
+        keepPlay=true;
         while(keepPlay){
             player.getBetAndType().clear();
             keepBet=true;
@@ -81,7 +82,7 @@ public class BigSixWheel extends Game{
             System.out.println("Where would you like to place your bet? (1, 2, 5, 10, 20, Joker, Casino)\nEnter play to quit bet, enter exit to exit the game");
             type=input.next().toLowerCase();
             if(!type.equals("play")&& !type.equals("exit")) {
-                System.out.print("Enter your bet (-1 to exit):\n");
+                System.out.print("Enter your bet :\n");
                 bet = input.nextInt();
                 if (bet <= player.getWallet() && bet > 0 && checkType(type)) {
                     player.placeTypeAndBet(type, bet);
@@ -96,6 +97,8 @@ public class BigSixWheel extends Game{
                 keepBet = false;
             }else {
                 keepPlay=false;
+                keepBet=false;
+
             }
         } catch (Exception e) {
             System.out.println("Please enter a whole number as bet");

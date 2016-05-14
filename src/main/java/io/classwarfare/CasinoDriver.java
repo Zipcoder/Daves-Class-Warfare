@@ -136,7 +136,7 @@ public class CasinoDriver {
                     break;
             }
             System.out.println("Please choose a game  or enter '-1' to exit)\n" +
-                    "\n1)Blackjack\n2)Slot Machine\n3)Hangman\n5)Check balance\n");
+                    "\n1)Blackjack\n2)Slot Machine\n3)Hangman\n5)Check balance\n6)Big Six Wheel");
             System.out.print("Enter: ");
             choice = input.next();
         }
