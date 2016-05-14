@@ -1,5 +1,6 @@
 package io.classwarfare;
 
+import static io.classwarfare.Sounds.*;
 
 public class Player {
     private double wallet;
@@ -15,8 +16,12 @@ public class Player {
         counter++;
     }
     public void placeBet(double bet){
-        this.bet=bet;
-        this.wallet-=bet;
+        if(bet == -1 ){
+            this.bet = bet;
+        } else {
+            this.bet = bet;
+            this.wallet -= bet;
+        }
     }
 
     public double showBalance(){
@@ -25,6 +30,8 @@ public class Player {
 
     public void collectWinnings(double amount){
         this.wallet+=amount;
+        if(amount > 0){
+        playGetMoneySound();}
     }
 
     public double getBet(){

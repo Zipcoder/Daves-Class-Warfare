@@ -12,23 +12,26 @@ public class CasinoDriver {
     SlotMachine slotMachine;
     Blackjack blackjack;
     Hangman hangman;
-    Scanner input=new Scanner(System.in);
+    Scanner input = new Scanner(System.in);
+    boolean canLeave = false;
+
     public static void main(String[] args) {
-        CasinoDriver casinoDriver=new CasinoDriver();
+        CasinoDriver casinoDriver = new CasinoDriver();
         casinoDriver.start();
 
     }
-    private void start(){
+
+    private void start() {
         /**
          * Make new object of Player and games
          */
-        player=new Player();
+        player = new Player();
 
-        blackjack=new Blackjack(player);
-        slotMachine=new SlotMachine(player);
-        russianRoulette=new RussianRoulette(player);
-        hangman=new Hangman(player);
-        String choice="";
+        blackjack = new Blackjack(player);
+        slotMachine = new SlotMachine(player);
+        russianRoulette = new RussianRoulette(player);
+        hangman = new Hangman(player);
+        String choice = "";
         printLogo();
         System.out.println("Welcome to Great Wall Casino");
         choiceGame();
@@ -38,7 +41,7 @@ public class CasinoDriver {
     /**
      * print the wall on to the console.
      */
-    private void printLogo(){
+    private void printLogo() {
         delayOutput("  _______ .______       _______      ___   .___________.   ____    __    ____  ___       __       __       ");
         delayOutput(" /  _____||   _  \\     |   ____|    /   \\  |           |   \\   \\  /  \\  /   / /   \\     |  |     |  |       ");
         delayOutput("|  |  __  |  |_)  |    |  |__      /  ^  \\ `---|  |----`    \\   \\/    \\/   / /  ^  \\    |  |     |  |       ");
@@ -54,14 +57,14 @@ public class CasinoDriver {
         delayOutput("                         \\______|/__/     \\__\\ |_______/    |__| |__| \\__|  \\______/                        ");
         delayOutput("");
         delayOutput("");
-        delayOutput("____                                                                                                      ____");
+        delayOutput("____                                                                                                     _____");
         delayOutput("|$  \\\\                                                                                                 // $  |");
         delayOutput("|___//                                                                                                 \\\\____|");
         delayOutput("|                                                                                                            |");
         delayOutput("|                                                                                                            |");
         delayOutput("_____     _____     _____     _____     _____     _____     _____     _____     _____     _____     _____    _       ");
         delayOutput("|---|_____|---|_____|---|_____|---|_____|---|_____|---|_____|---|_____|---|_____|---|_____|---|_____|---|____|");
-        for(int x = 0; x <5;x++){
+        for (int x = 0; x < 5; x++) {
 
             delayOutput("_|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|\n" +
                     "___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|__");
@@ -69,7 +72,7 @@ public class CasinoDriver {
 
     }
 
-    public void printBlackJackWelcome(){
+    public void printBlackJackWelcome() {
         System.out.println("____    __    ____  _______  __        ______   ______   .___  ___.  _______    .___________.  ______      ");
         System.out.println("\\   \\  /  \\  /   / |   ____||  |      /      | /  __  \\  |   \\/   | |   ____|   |           | /  __  \\     ");
         System.out.println(" \\   \\/    \\/   /  |  |__   |  |     |  ,----'|  |  |  | |  \\  /  | |  |__      `---|  |----`|  |  |  |    ");
@@ -88,9 +91,10 @@ public class CasinoDriver {
 
     /**
      * Delay the output by 100 milliseconds
+     *
      * @param s
      */
-    private void delayOutput(String s){
+    private void delayOutput(String s) {
         try {
             TimeUnit.MILLISECONDS.sleep(100);
         } catch (InterruptedException e) {
@@ -99,13 +103,13 @@ public class CasinoDriver {
         System.out.println(s);
     }
 
-    private boolean choiceGame(){
-        Scanner input=new Scanner(System.in);
-        String choice="";
-        System.out.println("Please choose a game \n"+ "1)Blackjack\n2)Slot Machine\n3)Hangman\n");
-        System.out.print("Enter: ");
-        choice=input.next();
-        while(!choice.equals("-1")) {
+    private boolean choiceGame() {
+        Scanner input = new Scanner(System.in);
+        String choice = "";
+        System.out.println("Please choose a game \n" + "1)Blackjack\n2)Slot Machine\n3)Hangman\n");
+        System.out.print("Enter: \n");
+        choice = input.next();
+        while (!choice.equals("-1")) {
             switch (choice) {
                 case "1":
                     printBlackJackWelcome();
@@ -121,72 +125,92 @@ public class CasinoDriver {
                     russianRoulette.play();
                     break;
                 case "5":
-                    System.out.println("You current balance is "+player.getWallet());
-                default:choiceGame();
+                    System.out.println("You current balance is " + player.getWallet());
+                    break;
+                default:
+                    choiceGame();
                     break;
             }
-            System.out.println("Please choice a game (-1 to exit)"+
-                    "\n1)Blackjack\n2)Slot Machine\n3)Hangman\n5)Check balance");
+            System.out.println("Please choose a game  or enter '-1' to exit)\n" +
+                    "\n1)Blackjack\n2)Slot Machine\n3)Hangman\n5)Check balance\n");
             System.out.print("Enter: ");
-            choice=input.next();
+            choice = input.next();
         }
 
+        if (!canLeave) {
+            if (player.getWallet() < 0) {
+                System.out.println("Do you really think you can leave without paying us the money?\n I challenge you to roulette!");
+                russianRoulette.play();
+            } else if (player.getWallet() > 5000) {
+                System.out.println("Do you really think you can leave with the all money you won?\n I challenge you to roulette!");
+                russianRoulette.play();
+            } else
+                canLeave = true;
+        }
+
+        if (player.getWallet() >= 5000) {
+            System.out.println("You leave triumphantly with " + (int) player.getWallet() + " dollars");
+        } else {
+            System.out.println("You leave in shame");
+        }
         return false;
     }
 
-    private void playSlotMachine(){
+    private void playSlotMachine() {
 
-        while((int)player.getBet()!=-1){
+        while (player.getBet() != -1) {
             placeBet();
-            if(player.getBet()!=-1.0){
+            if (player.getBet() != -1.0) {
                 slotMachine.play();
             }
         }
-
+        player.placeBet(0);
     }
 
-    private void playBlackJack(){
+    private void playBlackJack() {
 
-        while((int)player.getBet()!=-1){
+        while (player.getBet() != -1) {
             placeBet();
-            if(player.getBet()!=-1.0){
+            if (player.getBet() != -1.0) {
                 blackjack.play();
             }
         }
-
+        player.placeBet(0);
     }
 
-    private void playHangman(){
+    private void playHangman() {
 
-        while((int)player.getBet()!=-1){
+        while (player.getBet() != -1) {
             placeBet();
-            if(player.getBet()!=-1.0){
-                 hangman.play();
+            if (player.getBet() != -1.0) {
+                hangman.play();
             }
         }
-        player.collectWinnings(-1);
-
+        player.placeBet(0);
     }
 
 
-    private void placeBet(){
-        double bet=0;
+    private void placeBet() {
+        double bet = 0;
 
         try {
-            System.out.print("Enter your bet (-1 to exit):");
-            bet=input.nextInt();
+            System.out.println("You have " + player.getWallet() + " Dollars.");
+            System.out.print("Enter your bet (-1 to exit):\n");
+            bet = input.nextInt();
 
-            if(bet<=player.getWallet()) {
+            if (bet <= player.getWallet() && bet >= -1) {
                 player.placeBet(bet);
-            }else {
-                System.out.println("Your bet is greater than you balance");
+            } else if (bet > player.getWallet()) {
+                System.out.println("Your bet is greater than your balance!");
+                placeBet();
+            } else {
+                System.out.println("That's an invalid bet!");
                 placeBet();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Please enter a double");
             input.nextLine();
             placeBet();
         }
-
     }
 }
