@@ -1,6 +1,7 @@
 package io.classwarfare;
 
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * Created by zihaocastine on 5/13/16.
@@ -9,31 +10,46 @@ public class BigSixWheel extends Game{
     private Player player;
     private Random random;
     private String wheelNumber;
+    private Scanner input;
+    private boolean keepBet;
+    private boolean keepPlay;
 
     BigSixWheel(Player player){
         this.player=player;
         this.random=new Random();
+        keepBet=true;
+        keepPlay=true;
+        input=new Scanner(System.in);
     }
 
     @Override
     public void play() {
-        takeBet(player.getBet());
-        spinningWheel();
-
-
-
-
-    }
-
-    /**
-     *         TAKES BET AND ADDS TO CASINO/GAME WALLET
-     * @param value
-     */
-    private void takeBet(double value) {
-        super.setWallet(super.getWallet()+value);
+        while(keepPlay){
+            player.getBetAndType().clear();
+            keepBet=true;
+            while(keepBet){
+                placeTypeAndBet();
+            }
+            spinningWheel();
+            player.collectWinnings(calculateWinning());
+        }
 
     }
 
+    private int calculateWinning(){
+        int total=0;
+        System.out.println("The wheel is on "+wheelNumber);
+        for (String each: player.getBetAndType().keySet()) {
+            if(wheelNumber.equals(each)){
+                if(each.equals("joker")||each.equals("casino")){
+                    total+= 45*player.getBetAndType().get(each);
+                }else {
+                    total += Integer.parseInt(each) * player.getBetAndType().get(each);
+                }
+            }
+        }
+        return total;
+    }
 
     /**
      * spinning the wheel, put a string to wheelNumber
@@ -53,10 +69,58 @@ public class BigSixWheel extends Game{
         }else if(tempWheel>52 && tempWheel<=53){
             wheelNumber="casino";
         }else {
-            wheelNumber="Joker";
+            wheelNumber="joker";
         }
     }
 
+    private void placeTypeAndBet() {
+        int bet = 0;
+        String type="";
+        try {
+            System.out.println("You have " + player.getWallet() + " Dollars.");
+            System.out.println("Where would you like to place your bet? (1, 2, 5, 10, 20, Joker, Casino)\nEnter play to quit bet, enter exit to exit the game");
+            type=input.next().toLowerCase();
+            if(!type.equals("play")&& !type.equals("exit")) {
+                System.out.print("Enter your bet (-1 to exit):\n");
+                bet = input.nextInt();
+                if (bet <= player.getWallet() && bet > 0 && checkType(type)) {
+                    player.placeTypeAndBet(type, bet);
+                } else if (bet > player.getWallet()) {
+                    System.out.println("Your bet is greater than your balance!");
+                    placeTypeAndBet();
+                } else {
+                    System.out.println("That's an invalid bet! or invalid type of bet");
+                    placeTypeAndBet();
+                }
+            }else if (type.equals("play")) {
+                keepBet = false;
+            }else {
+                keepPlay=false;
+            }
+        } catch (Exception e) {
+            System.out.println("Please enter a whole number as bet");
+            input.nextLine();
+            placeTypeAndBet();
+        }
+
+    }
+
+    private boolean checkType(String type){
+        boolean ans=false;
+        switch (type.toLowerCase()){
+            case "1":
+            case "2":
+            case "5":
+            case "10":
+            case "20":
+            case "joker":
+            case "casino": ans=true;
+                break;
+            default: ans=false;
+                break;
+        }
+        return ans;
+    }
 
     @Override
     public void backToMenu() {

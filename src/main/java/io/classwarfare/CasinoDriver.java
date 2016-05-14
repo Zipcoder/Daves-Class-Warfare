@@ -12,6 +12,7 @@ public class CasinoDriver {
     SlotMachine slotMachine;
     Blackjack blackjack;
     Hangman hangman;
+    BigSixWheel bigSixWheel;
     Scanner input = new Scanner(System.in);
     boolean canLeave = false;
 
@@ -31,6 +32,7 @@ public class CasinoDriver {
         slotMachine = new SlotMachine(player);
         russianRoulette = new RussianRoulette(player);
         hangman = new Hangman(player);
+        bigSixWheel=new BigSixWheel(player);
         String choice = "";
         printLogo();
         System.out.println("Welcome to Great Wall Casino");
@@ -106,7 +108,8 @@ public class CasinoDriver {
     private boolean choiceGame() {
         Scanner input = new Scanner(System.in);
         String choice = "";
-        System.out.println("Please choose a game \n" + "1)Blackjack\n2)Slot Machine\n3)Hangman\n");
+        System.out.println("Please choose a game  or enter '-1' to exit)\n" +
+                "\n1)Blackjack\n2)Slot Machine\n3)Hangman\n5)Check balance\n6)BigSixWheel");
         System.out.print("Enter: \n");
         choice = input.next();
         while (!choice.equals("-1")) {
@@ -127,6 +130,7 @@ public class CasinoDriver {
                 case "5":
                     System.out.println("You current balance is " + player.getWallet());
                     break;
+                case "6":playBigSixWheel();
                 default:
                     choiceGame();
                     break;
@@ -188,6 +192,12 @@ public class CasinoDriver {
         }
         player.placeBet(0);
     }
+
+    private void playBigSixWheel(){
+        bigSixWheel.play();
+
+    }
+
 
 
     private void placeBet() {
