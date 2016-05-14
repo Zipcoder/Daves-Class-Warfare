@@ -204,4 +204,24 @@ public class HangmanTest {
         int actualValue = hangman.getDisplayArrayLength();
         Assert.assertEquals("Expected value: 6", expectedValue, actualValue);
     }
+
+    @Test
+    public void hangmanShapeTest(){
+        Player player = new Player();
+        Hangman hangman = new Hangman(player);
+        String expectedHangmanShape = "-----\n|     |\n|     @\n|    /|\\\n|     / \\";;
+        String actualHangmanShape = hangman.getHangManShape();
+        Assert.assertEquals("The shape should start with all limbs",expectedHangmanShape,actualHangmanShape);
+    }
+
+    @Test
+    public void hangmanShapeLimbRemovalTest(){
+        Player player = new Player();
+        Hangman hangman = new Hangman(player);
+        hangman.setAnswerWord("qqqq");
+        hangman.check('z');
+        String expectedHangmanShape = "-----\n|     |\n|     @\n|    /|\\\n|    /";
+        String actualHangmanShape = hangman.getHangManShape();
+        Assert.assertEquals("The shape should miss one leg",expectedHangmanShape,actualHangmanShape);
+    }
 }

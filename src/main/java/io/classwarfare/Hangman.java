@@ -11,19 +11,20 @@ import java.util.Scanner;
  */
 public class Hangman extends Game {
     private int numberOfGuesses = 0;
-    private String[] wordBank = {"beagle", "beagle"};
-    private String answerWord = pickWord();
+    private String[] wordBank = {"beagle", "beagle", "bird", "america", "java", "polymorphism", "justice", "democracy", "hamburger", "corgi", "thorgi", "zipcode","employment"};
+    private String answerWord;
     private ArrayList<Character> correctGuesses = new ArrayList<Character>();
     private ArrayList<Character> incorrectGuesses = new ArrayList<Character>();
-    private char[] answerArray = answerWord.toCharArray();
+    private char[] answerArray;
     private char[] displayArray;
     private boolean win = false;
     private int randomNumber;
     private Player player;
 
-    Hangman(Player player){
-        this.player=player;
+    Hangman(Player player) {
+        this.player = player;
     }
+
     public char[] getAnswerArray() {
         return answerArray;
     }
@@ -40,10 +41,18 @@ public class Hangman extends Game {
         return answerWord;
     }
 
+    public int getNumberOfGuesses() {
+        return numberOfGuesses;
+    }
+
+    public int getDisplayArrayLength() {
+        return displayArray.length;
+    }
+
     public void setDisplayArray() {
         displayArray = new char[answerArray.length];
         for (int i = 0; i < displayArray.length; i++) {
-            displayArray[i] = '_';
+            displayArray[i] = '-';
         }
     }
 
@@ -58,20 +67,16 @@ public class Hangman extends Game {
     }
 
     public String makeDisplayString() {
-        String displayString = "";
+        String displayString = "\n";
         for (int i = 0; i < displayArray.length; i++) {
             displayString += Character.toString(displayArray[i]);
         }
         return displayString;
     }
 
-    public int getDisplayArrayLength() {
-        return displayArray.length;
-    }
-
     public boolean getUserInput() {
         Scanner input = new Scanner(System.in);
-        putToDisplay("\nGuess the word, or a letter in the word.");
+        putToDisplay("\n" + getHangManShape() + "        Guess the word, or a letter in the word.\n");
         String s = input.next().toLowerCase();
         if (s.length() > 1) {
             check(s);
@@ -86,13 +91,14 @@ public class Hangman extends Game {
     public void checkNumberOfGuesses() {
         if (numberOfGuesses >= 7) {
             win = true;
-            player.collectWinnings(player.getBet()*3);
-            putToDisplay("You're dead!!!\nGAME OVER\n");
+            player.collectWinnings(player.getBet() * 3);
+            putToDisplay("You lose!\n");
         }
     }
 
     @Override
     public void play() {
+        backToMenu();
         pickWord();
         setDisplayArray();
         while (!win) {
@@ -100,12 +106,14 @@ public class Hangman extends Game {
             getUserInput();
             updateDisplayArray();
         }
-
     }
 
     @Override
     public void backToMenu() {
-
+        win = false;
+        numberOfGuesses = 0;
+        incorrectGuesses.clear();
+        correctGuesses.clear();
     }
 
     public void putToDisplay(String toDisplay) {
@@ -120,9 +128,9 @@ public class Hangman extends Game {
 
         }
         if (complete) {
-            putToDisplay("YOU WIN!\nGAME OVER\n");
+            putToDisplay("YOU WIN!\n");
             win = true;
-            player.collectWinnings(player.getBet()*3);
+            player.collectWinnings(player.getBet() * 3);
 
         }
     }
@@ -132,9 +140,9 @@ public class Hangman extends Game {
         String guess = word.toLowerCase();
 
         if (guess.equals(answerWord)) {
-            putToDisplay("Hey, your guess was correct! \n GAME OVER\n");
+            putToDisplay("Hey, your guess was correct! \n");
             win = true;
-            player.collectWinnings(player.getBet()*3);
+            player.collectWinnings(player.getBet() * 3);
             return true;
         } else {
             putToDisplay("Sorry, that's not the answer!");
@@ -146,7 +154,7 @@ public class Hangman extends Game {
 
     public boolean check(char letter) { //sees whether guess has already been made, and that it's correct
         boolean result = false;
-        for (int j = 0; j < answerArray.length; j++) { //NOT INDEXING CORRECTLY??
+        for (int j = 0; j < answerArray.length; j++) {
 
             if (answerArray[j] == letter && (checkCorrectGuesses(letter) == true)) { //already guessed correctly
                 putToDisplay("You've already guessed this letter!");
@@ -154,7 +162,7 @@ public class Hangman extends Game {
                 return result;
 
             } else if (answerArray[j] == letter && (checkCorrectGuesses(letter) == false)) { //novel correct guess
-                putToDisplay("Hey, your guess was correct!");
+                putToDisplay("Hey, your guess was correct!\n");
                 addToCorrectGuesses(letter);
                 updateDisplayArray();
                 checkForCompletion();
@@ -162,7 +170,7 @@ public class Hangman extends Game {
                 return result;
             }
         }
-        putToDisplay("Sorry, wrong answer!");
+        putToDisplay("Sorry, wrong answer!\n");
         addToIncorrectGuesses(letter); //incorrect guess
         numberOfGuesses++;
         checkNumberOfGuesses();
@@ -200,16 +208,43 @@ public class Hangman extends Game {
         incorrectGuesses.add(letter);
     }
 
-
     public String pickWord() {
         Random rand = new Random();
         int randomNumber = rand.nextInt(wordBank.length);
         String word = wordBank[randomNumber];
+        answerWord = word;
+        answerArray = answerWord.toCharArray();
         return word;
     }
 
-    public int getNumberOfGuesses() {
-        return numberOfGuesses;
+    public String getHangManShape() {
+        String shape = "";
+        switch (numberOfGuesses) {
+            case 0:
+                shape = "______\n|     |\n|     @\n|    /|\\\n|    / \\";
+                break;
+            case 1:
+                shape = "______\n|     |\n|     @\n|    /|\\\n|    /";
+                break;
+            case 2:
+                shape = "______\n|     |\n|     @\n|    /|\\\n|";
+                break;
+            case 3:
+                shape = "______\n|     |\n|     @\n|     |\\\n|";
+                break;
+            case 4:
+                shape = "______\n|     |\n|     @\n|     |\n|";
+                break;
+            case 5:
+                shape = "______\n|     |\n|     @\n|     \n|";
+                break;
+            case 6:
+                shape = "______\n|     |\n|     O\n|     \n|";
+                break;
+            case 7:
+                shape = "______\n|     |\n|     \n|     \n|";
+                break;
+        }
+        return shape;
     }
-
 }

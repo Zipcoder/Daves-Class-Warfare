@@ -1,52 +1,50 @@
 package io.classwarfare;
 
-import java.net.MalformedURLException;
 import java.util.Random;
-
-import java.net.URL;
-import java.applet.Applet;
-import java.applet.AudioClip;
-import java.io.File;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+import static io.classwarfare.Sounds.*;
 
 /**
  * Created by zihaocastine on 5/11/16.
  */
-public class RussianRoulette extends Game{
+public class RussianRoulette extends Game {
     Player player;
-    RussianRoulette(Player player){
-        this.player=player;
+
+    RussianRoulette(Player player) {
+        this.player = player;
     }
+
     public void play() {
-        Random random=new Random();
-        Scanner input= new Scanner(System.in);
-        String s="";
-        int chamberNumber =(random.nextInt(6)+1);
+        Random random = new Random();
+        Scanner input = new Scanner(System.in);
+        String s = "";
+        int chamberNumber = (random.nextInt(6) + 1);
 
 
-        while(chamberNumber>0){
+        while (chamberNumber > 0) {
             /**
              * player pull trigger
              */
 
             System.out.println("Press any key to pull trigger");
             input.nextLine();
-            if(PullTrigger(chamberNumber)){
-                delayOutput("You dead!");
+            if (PullTrigger(chamberNumber)) {
+                delayOutput("You are dead!");
                 System.exit(0);
-            }else{
+            } else {
                 chamberNumber--;
                 /**
                  * dealer pull trigger
                  */
-                delayOutput("Dealer pull trigger");
+                delayOutput("Dealer gets ready to pull the trigger");
 
-                if(PullTrigger(chamberNumber)){
-                    player.collectWinnings(pay(5000));
-                    System.out.println("Now you have all you money back.");
-                    System.exit(0);
-                }else{
+                if (PullTrigger(chamberNumber)) {
+                    player.collectWinnings(pay(10000));
+                    System.out.println("The dealer is dead!");
+                    System.out.println("\nYou take all the money.\n");
+                    chamberNumber = 0;
+                } else {
                     chamberNumber--;
                     delayOutput("");
                 }
@@ -54,45 +52,17 @@ public class RussianRoulette extends Game{
         }
     }
 
-    private boolean PullTrigger(int num){
-        if(num<2){
+    private boolean PullTrigger(int num) {
+        if (num < 2) {
             playGunshot();
             return true;
-        }else {
+        } else {
             playDryFireshot();
             return false;
+
         }
     }
 
-    /**
-     * play gun shot sound
-     */
-    private void playGunshot(){
-        URL test = null;
-        try {
-            test = new File ("src/main/resources/gunshot.wav").toURI().toURL();
-            AudioClip clip = Applet.newAudioClip(test);
-            clip.play();
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * play dry fire shot sound
-     */
-    private void playDryFireshot(){
-        URL test = null;
-        try {
-            test = new File ("src/main/resources/drygun.wav").toURI().toURL();
-            AudioClip clip = Applet.newAudioClip(test);
-            clip.play();
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-    }
     public double pay(double amount) {
         return amount;
     }
@@ -101,9 +71,9 @@ public class RussianRoulette extends Game{
 
     }
 
-    private void delayOutput(String s){
+    private void delayOutput(String s) {
         try {
-            TimeUnit.MILLISECONDS.sleep(1500);
+            TimeUnit.MILLISECONDS.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
