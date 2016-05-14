@@ -92,7 +92,7 @@ public class CasinoDriver {
      */
     private void delayOutput(String s){
         try {
-            TimeUnit.MILLISECONDS.sleep(25);
+            TimeUnit.MILLISECONDS.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
