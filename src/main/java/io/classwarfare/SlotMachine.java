@@ -5,12 +5,11 @@ import java.util.*;
  */
 public class SlotMachine extends Game{
 
-    private static String[][] tumblers = {{"7","BAR","BAR","JAVA","JAVA","JAVA"},{"7","BAR","BAR","JAVA","JAVA","JAVA"},{"7","BAR","BAR","JAVA","JAVA","JAVA"}};
+    protected static String[][] tumblers = {{"7","BAR","BAR","JAVA","JAVA","JAVA"},{"7","BAR","BAR","JAVA","JAVA","JAVA"},{"7","BAR","BAR","JAVA","JAVA","JAVA"}};
 
     Player player;
-
-    private static String winString;
-    private static double payOut = 0;
+    protected static String winString;
+    protected static double payOut = 0;
     SlotMachine(Player currentPlayer){
         this.player=currentPlayer;
     }
@@ -87,14 +86,13 @@ public class SlotMachine extends Game{
     public double pay(double value) {
         if(checkTumblers()==true) {
             System.out.println(winString);
-            System.out.println("You win!" + SlotMachineGraphics.sepLine);
+            System.out.println("\nYou win! Payout is " + payOut + SlotMachineGraphics.sepLine);
             super.setWallet(super.getWallet()-payOut);
-
             return value;
         }
         else {
             System.out.println(winString);
-            System.out.println("You lose! HAH!" + SlotMachineGraphics.sepLine);
+            System.out.println("\nYou lose! HAH!" + SlotMachineGraphics.sepLine);
             return 0;
         }
     }

@@ -22,29 +22,28 @@ public class SlotMachineTest {
     public void gameWalletTest() {
         double expectedValue = 2000000;
         double actualValue = slots.getWallet();
-        assertNotEquals("Should have deducted money from game wallet",expectedValue,actualValue);
+        assertNotEquals("Should have deducted money from game wallet", expectedValue, actualValue);
     }
 
     @Test
     public void playerWalletTest() {
         double expectedValue = 5000;
         double actualValue = player.getWallet();
-        assertNotEquals("Should deduct money from player wallet",expectedValue,actualValue);
-    }
-
-    /*@Test
-    public void payoutTest() {
-        double expectedValue = 0;
-        double actualValue =
+        assertNotEquals("Should deduct money from player wallet", expectedValue, actualValue);
     }
 
     @Test
-    public void playerBetDeductionTest(){
-        Player deductionPlayer = new Player();
-        SlotMachine slotsBetTest = new SlotMachine(deductionPlayer);
-        double expectedValue = 50;
-        slotsBetTest
-        double actualValue = 4950;
-    }*/
+    public void payoutChangeTest() {
+        double expectedValue = 5;
+        double actualValue = SlotMachine.payOut;
+        assertNotEquals("Payout should be different then the bet",expectedValue,actualValue);
+    }
+
+    @Test
+    public void winStringChangeTest() {
+        String expectedValue = "";
+        String actualValue = SlotMachine.winString;
+        assertNotEquals("The win string should have initialized",expectedValue,actualValue);
+    }
 
 }
