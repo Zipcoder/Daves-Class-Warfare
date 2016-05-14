@@ -37,6 +37,10 @@ public class BigSixWheel extends Game{
 
     }
 
+    /**
+     * calculate the user winning amount, if user did not win anything. return 0
+     * @return
+     */
     private int calculateWinning(){
         int total=0;
         System.out.println("The wheel is on "+wheelNumber);
@@ -74,6 +78,9 @@ public class BigSixWheel extends Game{
         }
     }
 
+    /**
+     * let user to enter the type of bet, and amount of the bet
+     */
     private void placeTypeAndBet() {
         int bet = 0;
         String type="";
@@ -107,6 +114,12 @@ public class BigSixWheel extends Game{
         }
 
     }
+
+    /**
+     * check the type of bet player is making.
+     * @param type
+     * @return
+     */
 
     private boolean checkType(String type){
         boolean ans=false;
