@@ -8,6 +8,8 @@ public class RussianRouletteTest {
     RussianRoulette russianRouletteTest;
     Player testPlayer;
 
+    //NEED TO SIMULATE INPUT HERE
+
     @Before
     public void russianRouletteTestSetup() {
         testPlayer = new Player();

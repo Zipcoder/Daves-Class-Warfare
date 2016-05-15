@@ -21,7 +21,6 @@ public class RussianRoulette extends Game {
         String s = "";
         int chamberNumber = (random.nextInt(6) + 1);
 
-
         /**
          * LOOP THROUGH CHAMBERS UNTIL RUSSIAN ROULETTE IS COMPELTE
          */
@@ -38,7 +37,7 @@ public class RussianRoulette extends Game {
                 chamberNumber--;
 
                 //DEALER PULLS TRIGGER
-                delayOutput("Dealer gets ready to pull the trigger");
+                System.out.println("Dealer gets ready to pull the trigger");
 
                 if (PullTrigger(chamberNumber)) {
                     player.collectWinnings(pay(10000));
@@ -72,7 +71,7 @@ public class RussianRoulette extends Game {
     }
 
     public void backToMenu() {
-
+        // This is end of game, method not needed
     }
 
     /**

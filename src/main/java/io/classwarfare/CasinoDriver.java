@@ -32,7 +32,8 @@ public class CasinoDriver {
         slotMachine = new SlotMachine(player);
         russianRoulette = new RussianRoulette(player);
         hangman = new Hangman(player);
-        bigSixWheel=new BigSixWheel(player);
+        bigSixWheel = new BigSixWheel(player);
+        texasHoldum = new TexasHoldum(player);
         String choice = "";
         Graphics.printLogo();
         System.out.println("Welcome to Great Wall Casino");
@@ -44,7 +45,7 @@ public class CasinoDriver {
         Scanner input = new Scanner(System.in);
         String choice = "";
         System.out.println("Please choose a game  or enter '-1' to exit)\n" +
-                "\n1)Blackjack\n2)Slot Machine\n3)Hangman\n5)Check balance\n6)BigSixWheel\n7)TexasHoldum");
+                "\n1)Blackjack\n2)Slot Machine\n3)Hangman\n4)Big Six Wheel\n5)TexasHoldum\n6)Check Balance\n");
         System.out.print("Enter: \n");
         choice = input.next();
         while (!choice.equals("-1")) {
@@ -54,52 +55,55 @@ public class CasinoDriver {
                     playBlackJack();
                     break;
                 case "2":
+                    System.out.println(Graphics.welcomeToSlots);
                     playSlotMachine();
                     break;
                 case "3":
+                    System.out.println(Graphics.welcomeToHangman);
                     playHangman();
                     break;
                 case "4":
-                    russianRoulette.play();
-                    break;
-                case "5":
-                    System.out.println("You current balance is " + player.getWallet());
-                    break;
-                case "6":
+                    System.out.println(Graphics.welcomeToBigSixWheel);
                     playBigSixWheel();
                     break;
-                case "7":
+                case "5":
                     Graphics.printTexasHoldumWelcome();
                     playTexasHoldum();
+                case "6":
+                    System.out.println("You current balance is " + player.getWallet());
+                    break;
                 default:
                     choiceGame();
                     break;
             }
             System.out.println("Please choose a game  or enter '-1' to exit)\n" +
-                    "\n1)Blackjack\n2)Slot Machine\n3)Hangman\n5)Check balance\n6)Big Six Wheel");
-            System.out.print("Enter: ");
+                    "\n1)Blackjack\n2)Slot Machine\n3)Hangman\n4)Big Six Wheel\n5)TexasHoldum\n6)Check Balance\n");
+            System.out.print("\nEnter: ");
             choice = input.next();
         }
 
         if (!canLeave) {
             if (player.getWallet() < 0) {
-                System.out.println("Do you really think you can leave without paying us the money?\n I challenge you to roulette!");
+                System.out.println("\nDo you really think you can leave without paying us the money?\nI challenge you to russian roulette!\n");
                 russianRoulette.play();
             } else if (player.getWallet() > 5000) {
-                System.out.println("Do you really think you can leave with the all money you won?\n I challenge you to roulette!");
+                System.out.println("\nDo you really think you can leave with the all money you won?\nI challenge you to russian roulette!\n");
                 russianRoulette.play();
             } else
                 canLeave = true;
         }
 
         if (player.getWallet() >= 5000) {
-            System.out.println("You leave triumphantly with " + (int) player.getWallet() + " dollars");
+            System.out.println("\nYou leave triumphantly with " + (int) player.getWallet() + " dollars");
+            System.exit(0);
         } else {
-            System.out.println("You leave in shame");
+            System.out.println("\nYou leave in shame");
+            System.exit(0);
         }
         return false;
     }
-    private void playTexasHoldum(){
+
+    private void playTexasHoldum() {
         texasHoldum.play();
     }
 
@@ -136,11 +140,10 @@ public class CasinoDriver {
         player.placeBet(0);
     }
 
-    private void playBigSixWheel(){
+    private void playBigSixWheel() {
         bigSixWheel.play();
 
     }
-
 
 
     private void placeBet() {

@@ -32,20 +32,24 @@ public class BlackjackTest {
     public void dealTest(){
         Player player = new Player();
         Blackjack blackjack = new Blackjack(player);
-        Hand playerHand = new Hand();
+        blackjack.playerHand = new Hand();
+        blackjack.dealerHand = new Hand();
+        blackjack.deck = new Deck();
         blackjack.deal();
         int expected = 2;
-        int actual = playerHand.cardList.size();
+        int actual = blackjack.playerHand.cardList.size();
         assertEquals("Hand should have a length of 2",expected,actual);
     }
     @Test
     public void hitTest(){
         Player player = new Player();
         Blackjack blackjack = new Blackjack(player);
-        Hand playerHand = new Hand();
-        blackjack.hit(playerHand);
+        blackjack.playerHand = new Hand();
+        blackjack.dealerHand = new Hand();
+        blackjack.deck = new Deck();
+        blackjack.hit(blackjack.playerHand);
         int expected = 1;
-        int actual = playerHand.cardList.size();
+        int actual = blackjack.playerHand.cardList.size();
         assertEquals("Hand should have a length of 1",expected,actual);
     }
     @Test

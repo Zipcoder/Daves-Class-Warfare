@@ -51,11 +51,10 @@ public class TexasHoldum implements CardGame {
                 continue;
             }
             makeABet(input);
-
+            findWinner();
             if(!PlayAgain()){
                 break;
             }
-            findWinner();
         }
     }
 
@@ -98,9 +97,9 @@ public class TexasHoldum implements CardGame {
             System.out.println("CONGRATULATIONS! YOU WON $"+((player.getBet()*2)+200));
             player.collectWinnings((player.getBet()*2)+200);
         }else if (dealerScore>=playerScore){
-            System.out.print("You lose, dealer had a \n|");
+            System.out.print("You lose, dealer had\n");
             for(int i =0;i<playerHand.cardList.size();i++){
-                System.out.print(dealerHand.cardList.get(i).getValue()+" of "+dealerHand.cardList.get(i).getSuit()+"|");
+                System.out.println(dealerHand.cardList.get(i).getGraphic());
             }
         }
     }
@@ -116,19 +115,19 @@ public class TexasHoldum implements CardGame {
 
     // prints the First card of the dealer, and all the cards in the players hand.
     public void showHand(){
-       System.out.print("Your hand is a |");
+       System.out.print("Your hand is a\n");
         for(int i =0;i<playerHand.cardList.size();i++){
-            System.out.print(playerHand.cardList.get(i).getValue()+" of "+playerHand.cardList.get(i).getSuit()+"|");
+            System.out.println(playerHand.cardList.get(i).getGraphic());
         }
     }
     public void showHandAndRiver(){
-        System.out.print("Your hand is a |");
+        System.out.print("Your hand is a\n");
         for(int i =0;i<playerHand.cardList.size();i++){
-            System.out.print(playerHand.cardList.get(i).getValue()+" of "+playerHand.cardList.get(i).getSuit()+"|");
+            System.out.println(playerHand.cardList.get(i).getGraphic());
         }
-        System.out.print(" The River is |");
+        System.out.print(" The River is\n");
         for(int i = 0; i< cardsOnTable.cardList.size(); i++){
-            System.out.print(cardsOnTable.cardList.get(i).getValue()+" of "+ cardsOnTable.cardList.get(i).getSuit()+"|");
+            System.out.println(cardsOnTable.cardList.get(i).getGraphic());
         }
     }
     // Deal method is used to give the player and the dealer two cards each.
