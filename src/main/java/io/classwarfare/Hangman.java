@@ -1,7 +1,5 @@
 package io.classwarfare;
 
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -11,20 +9,26 @@ import java.util.Scanner;
  */
 public class Hangman extends Game {
     private int numberOfGuesses = 0;
-    private String[] wordBank = {"beagle", "beagle", "bird", "america", "java", "polymorphism", "justice", "democracy", "hamburger", "corgi", "thorgi", "zipcode","employment"};
+    private String[] wordBank = {"beagle", "beagle", "bird", "america", "java", "polymorphism", "justice", "democracy", "hamburger", "corgi", "thorgi", "zipcode", "employment"};
     private String answerWord;
     private ArrayList<Character> correctGuesses = new ArrayList<Character>();
     private ArrayList<Character> incorrectGuesses = new ArrayList<Character>();
     private char[] answerArray;
     private char[] displayArray;
     private boolean win = false;
-    private int randomNumber;
     private Player player;
 
+    /**
+     * CONSTRUCTOR WHICH TAKES A PLAYER OBJECT
+     */
     Hangman(Player player) {
         this.player = player;
     }
 
+
+    /**
+     * GETTERS AND SETTERS
+     */
     public char[] getAnswerArray() {
         return answerArray;
     }
@@ -49,6 +53,9 @@ public class Hangman extends Game {
         return displayArray.length;
     }
 
+    /**
+     * SET THE DISPLAY ARRAY FOR USE TERMINAL SCREEN
+     */
     public void setDisplayArray() {
         displayArray = new char[answerArray.length];
         for (int i = 0; i < displayArray.length; i++) {
@@ -56,6 +63,9 @@ public class Hangman extends Game {
         }
     }
 
+    /**
+     * UPDATE THE DISPLAY ARRAY FOR USE ON THE TERMINAL SCREEN
+     */
     public void updateDisplayArray() {
         for (int i = 0; i < correctGuesses.size(); i++) {
             for (int j = 0; j < answerArray.length; j++) {
@@ -66,6 +76,9 @@ public class Hangman extends Game {
         }
     }
 
+    /**
+     * CREATES THE DISPLAY STRING FOR DISPLAY ON THE TERMINAL SCREEN
+     */
     public String makeDisplayString() {
         String displayString = "\n";
         for (int i = 0; i < displayArray.length; i++) {
@@ -74,6 +87,16 @@ public class Hangman extends Game {
         return displayString;
     }
 
+    /**
+     * DISPLAYS A STRING USING SYSTEM OUT
+     */
+    public void putToDisplay(String toDisplay) {
+        System.out.println(toDisplay);
+    }
+
+    /**
+     * TAKES USER INPUT TO USE FOR GUESSES
+     */
     public boolean getUserInput() {
         Scanner input = new Scanner(System.in);
         putToDisplay("\n" + getHangManShape() + "        Guess the word, or a letter in the word.\n");
@@ -88,14 +111,19 @@ public class Hangman extends Game {
         return false;
     }
 
+    /**
+     * CHECKS IF THE GAME HAS BEEN LOST DUE TO TOO MANY GUESSES
+     */
     public void checkNumberOfGuesses() {
         if (numberOfGuesses >= 7) {
             win = true;
-            player.collectWinnings(player.getBet() * 3);
             putToDisplay("You lose!\n");
         }
     }
 
+    /**
+     *  PLAY METHOD TO LOOP THROUGH HANGMAN
+     */
     @Override
     public void play() {
         backToMenu();
@@ -108,6 +136,9 @@ public class Hangman extends Game {
         }
     }
 
+    /**
+     *  PLAY METHOD TO LOOP THROUGH HANGMAN
+     */
     @Override
     public void backToMenu() {
         win = false;
@@ -116,26 +147,25 @@ public class Hangman extends Game {
         correctGuesses.clear();
     }
 
-    public void putToDisplay(String toDisplay) {
-        System.out.println(toDisplay);
-    }
-
+    /**
+     * CHECKS IF THE ANSWER HAS BEEN SUCCESSFULLY ENTERED
+     */
     public void checkForCompletion() {
         boolean complete = false;
 
         if (makeDisplayString().equals(answerWord)) {
             complete = true;
-
         }
         if (complete) {
             putToDisplay("YOU WIN!\n");
             win = true;
             player.collectWinnings(player.getBet() * 3);
-
         }
     }
 
-    //This checks the guessed word against the actual answer, if they guess a single char
+    /**
+     * CHECKS THE GUESSED CHAR AGAINST THE ANSWER
+     */
     public boolean check(String word) {
         String guess = word.toLowerCase();
 
@@ -152,6 +182,9 @@ public class Hangman extends Game {
         }
     }
 
+    /**
+     * CHECKS THE GUESSED WORD AGAINST THE ANSWER. USED IF THEY GUESS BY WORD
+     */
     public boolean check(char letter) { //sees whether guess has already been made, and that it's correct
         boolean result = false;
         for (int j = 0; j < answerArray.length; j++) {
@@ -178,6 +211,9 @@ public class Hangman extends Game {
         return result;
     }
 
+    /**
+     * CHECK IF CHAR HAS ALREADY BEEN SUBMITTED AS A CORRECT GUESS
+     */
     public boolean checkCorrectGuesses(char letter) {
         boolean result = false;
         for (int i = 0; i < correctGuesses.size(); i++) {
@@ -188,6 +224,9 @@ public class Hangman extends Game {
         return result;
     }
 
+    /**
+     * CHECK IF CHAR HAS ALREADY BEEN SUBMITTED AS A CORRECT GUESS
+     */
     public boolean checkIncorrectGuesses(char letter) {
 
         boolean result = false;
@@ -200,14 +239,23 @@ public class Hangman extends Game {
         return result;
     }
 
+    /**
+     * ADD A CHAR TO THE ARRAY LIST OF CORRECT GUESSES
+     */
     public void addToCorrectGuesses(char letter) {
         correctGuesses.add(letter);
     }
 
+    /**
+     * ADD A CHAR TO THE ARRAY LIST OF INCORRECT GUESSES
+     */
     public void addToIncorrectGuesses(char letter) {
         incorrectGuesses.add(letter);
     }
 
+    /**
+     * PICKS A WORD RANDOMLY
+     */
     public String pickWord() {
         Random rand = new Random();
         int randomNumber = rand.nextInt(wordBank.length);
@@ -217,6 +265,9 @@ public class Hangman extends Game {
         return word;
     }
 
+    /**
+     * CREATES THE HANGMAN SHAPE DEPENDING ON NUMBER OF GUESSES
+     */
     public String getHangManShape() {
         String shape = "";
         switch (numberOfGuesses) {

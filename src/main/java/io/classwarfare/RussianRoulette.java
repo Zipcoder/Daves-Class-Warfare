@@ -22,21 +22,22 @@ public class RussianRoulette extends Game {
         int chamberNumber = (random.nextInt(6) + 1);
 
 
+        /**
+         * LOOP THROUGH CHAMBERS UNTIL RUSSIAN ROULETTE IS COMPELTE
+         */
         while (chamberNumber > 0) {
-            /**
-             * player pull trigger
-             */
 
+            //PLAYER PULLS TRIGGER
             System.out.println("Press any key to pull trigger");
             input.nextLine();
             if (PullTrigger(chamberNumber)) {
                 delayOutput("You are dead!");
+                System.out.println(Graphics.russianRouletteDeath);
                 System.exit(0);
             } else {
                 chamberNumber--;
-                /**
-                 * dealer pull trigger
-                 */
+
+                //DEALER PULLS TRIGGER
                 delayOutput("Dealer gets ready to pull the trigger");
 
                 if (PullTrigger(chamberNumber)) {
@@ -52,6 +53,9 @@ public class RussianRoulette extends Game {
         }
     }
 
+    /**
+     * METHOD TO PULL TRIGGER AND CALL STATIC SOUND METHODS DEPENDING ON TYPE
+     */
     private boolean PullTrigger(int num) {
         if (num < 2) {
             playGunshot();
@@ -71,6 +75,9 @@ public class RussianRoulette extends Game {
 
     }
 
+    /**
+     * DELAY TEXT OUTPUT TO SIMULATE DELAY ON TRIGGER PULL
+     */
     private void delayOutput(String s) {
         try {
             TimeUnit.MILLISECONDS.sleep(500);
