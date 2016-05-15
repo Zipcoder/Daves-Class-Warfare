@@ -195,6 +195,7 @@ public class Blackjack extends Game {
         cardsPulledFromDeck++;
         dealerHand.cardList.add(deck.cards.get(cardsPulledFromDeck));
         cardsPulledFromDeck++;
+        Sounds.playShuffleSound();
     }
 
     /**
@@ -202,6 +203,7 @@ public class Blackjack extends Game {
      * @param hand
      */
     public void hit(Hand hand) {
+        
         hand.cardList.add(deck.cards.get(cardsPulledFromDeck));
         cardsPulledFromDeck++;
     }

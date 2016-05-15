@@ -12,6 +12,7 @@ public class CasinoDriver {
     Blackjack blackjack;
     Hangman hangman;
     BigSixWheel bigSixWheel;
+    TexasHoldum texasHoldum;
     Scanner input = new Scanner(System.in);
     boolean canLeave = false;
 
@@ -43,7 +44,7 @@ public class CasinoDriver {
         Scanner input = new Scanner(System.in);
         String choice = "";
         System.out.println("Please choose a game  or enter '-1' to exit)\n" +
-                "\n1)Blackjack\n2)Slot Machine\n3)Hangman\n5)Check balance\n6)BigSixWheel");
+                "\n1)Blackjack\n2)Slot Machine\n3)Hangman\n5)Check balance\n6)BigSixWheel\n7)TexasHoldum");
         System.out.print("Enter: \n");
         choice = input.next();
         while (!choice.equals("-1")) {
@@ -64,7 +65,12 @@ public class CasinoDriver {
                 case "5":
                     System.out.println("You current balance is " + player.getWallet());
                     break;
-                case "6":playBigSixWheel();
+                case "6":
+                    playBigSixWheel();
+                    break;
+                case "7":
+                    Graphics.printTexasHoldumWelcome();
+                    playTexasHoldum();
                 default:
                     choiceGame();
                     break;
@@ -92,6 +98,9 @@ public class CasinoDriver {
             System.out.println("You leave in shame");
         }
         return false;
+    }
+    private void playTexasHoldum(){
+        texasHoldum.play();
     }
 
     private void playSlotMachine() {

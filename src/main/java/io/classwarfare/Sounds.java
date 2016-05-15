@@ -55,4 +55,15 @@ public class Sounds {
             e.printStackTrace();
         }
     }
+    public static void playShuffleSound() {
+        URL shuffleFile = null;
+        try {
+            shuffleFile = new File("src/main/resources/shuffling-cards-6.wav").toURI().toURL();
+            AudioClip clip = Applet.newAudioClip(shuffleFile);
+            clip.play();
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -58,11 +58,7 @@ public class TexasHoldum implements CardGame {
             findWinner();
         }
     }
-    public static void main(String[] args) {
-        Player player = new Player();
-        TexasHoldum texas = new TexasHoldum(player);
-        texas.play();
-    }
+
     public void resetGame(){
         cardsPulledFromDeck = 0;
         playerScore = 0;
@@ -137,6 +133,7 @@ public class TexasHoldum implements CardGame {
     }
     // Deal method is used to give the player and the dealer two cards each.
     public void deal() {
+        Sounds.playShuffleSound();
         playerHand.cardList.add(deck.cards.get(cardsPulledFromDeck));
         cardsPulledFromDeck++;
         dealerHand.cardList.add(deck.cards.get(cardsPulledFromDeck));
@@ -148,6 +145,7 @@ public class TexasHoldum implements CardGame {
     }
     // hit method adds a card to the Hand that is passed into it.
     public void hit(Hand hand) {
+
         hand.cardList.add(deck.cards.get(cardsPulledFromDeck));
         cardsPulledFromDeck++;
     }
