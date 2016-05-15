@@ -82,12 +82,13 @@ public class Blackjack extends Game {
     public void askToPlayAgain(Scanner input){
         System.out.println("Your new balance is " + player.showBalance() + " Would you like to play again? 1 for Yes, 2 for No");
         int playAgain = input.nextInt();
-        if(playAgain==1){
+        if(playAgain==1 && gameInSession){
             placeBet();
         }
         if (playAgain==2){
             System.out.println("Thank you for playing, enjoy your day!");
             gameInSession = false;
+            player.placeBet(-1);
         }
     }
 
@@ -198,12 +199,17 @@ public class Blackjack extends Game {
             double bet=0;
 
             try {
-                System.out.print("Enter your bet (-1 to exit):");
+                System.out.print("Enter your bet:");
                 bet=input.nextInt();
 
-                if(bet<=player.getWallet()) {
+                if (bet == -1) {
+                    System.out.println("You already sat down, place your bet.");
+                    placeBet();
+                }
+                else if (bet<=player.getWallet()) {
                     player.placeBet(bet);
-                }else {
+                }
+                else {
                     System.out.println("Your bet is greater than you balance");
                     placeBet();
                 }
@@ -217,5 +223,3 @@ public class Blackjack extends Game {
 
 }
 
-/*
- */
