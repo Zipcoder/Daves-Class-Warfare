@@ -35,6 +35,7 @@ public class Player {
             wallet-=bet;
         }
     }
+    public double payToPot(double amount){return wallet-=amount;}
 
     public double showBalance(){
         return wallet;

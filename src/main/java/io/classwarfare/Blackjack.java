@@ -1,6 +1,5 @@
 package io.classwarfare;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -29,7 +28,7 @@ public class Blackjack extends Game {
         input = new Scanner(System.in);
         gameInSession = true;
         Player player = new Player();
-        while (gameInSession && player.showBalance()>0) {
+        while (gameInSession && player.showBalance()>=0) {
 
             deck= new Deck();
             playerHand = new Hand();
@@ -109,7 +108,7 @@ public class Blackjack extends Game {
     }
 
     // checkBust checks to see if a hand is above 21 and returns a boolean-false by default.
-    public boolean checkHandForBust(Hand hand) {
+    public boolean checkIfHandIsOver21(Hand hand) {
         boolean isBust = false;
         if (hand.checkValue() > 21) {
             isBust = true;
@@ -117,13 +116,13 @@ public class Blackjack extends Game {
         return isBust;
     }
     public boolean checkHandsForBust(){
-        if(checkHandForBust(playerHand)){
+        if(checkIfHandIsOver21(playerHand)){
             System.out.println("You Busted!");
             winningHand = dealerHand;
             bustCheck = true;
             return bustCheck;
         }
-        if(checkHandForBust(dealerHand)){
+        if(checkIfHandIsOver21(dealerHand)){
             System.out.println("Dealer Busted!");
             winningHand = playerHand;
             bustCheck = true;
@@ -176,7 +175,6 @@ public class Blackjack extends Game {
         playerHand.cardList.add(deck.cards.get(cardsPulledFromDeck));
         cardsPulledFromDeck++;
         dealerHand.cardList.add(deck.cards.get(cardsPulledFromDeck));
-
         cardsPulledFromDeck++;
     }
 
