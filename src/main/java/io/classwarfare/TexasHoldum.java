@@ -55,9 +55,13 @@ public class TexasHoldum implements CardGame {
             if(!PlayAgain()){
                 break;
             }
+
         }
     }
 
+    /**
+     * THIS RUNS AT THE START OF THE GAME, IT RESETS ALL VARIABLES SUCH AS THE DECK AND THE HANDS
+     */
     public void resetGame(){
         cardsPulledFromDeck = 0;
         playerScore = 0;
@@ -74,6 +78,11 @@ public class TexasHoldum implements CardGame {
         deal();
         showHand();
     }
+
+    /**
+     * THIS METHOD MERGES THE HANDS WITH THE RIVER, THEN CALCULATES THEIR SCORE,
+     * THEN COMPARES THE TWO SCORE TO DECIDE THE WINNER
+     */
     public void findWinner(){
         playerHand.cardList.addAll(cardsOnTable.cardList);
         dealerHand.cardList.addAll(cardsOnTable.cardList);
@@ -81,6 +90,11 @@ public class TexasHoldum implements CardGame {
         dealerScore = giveScore(dealerHand);
         decideWinner(playerScore,dealerScore);
     }
+
+    /**
+     * THIS METHOD HANDLES TAKING BETS
+     * @param input
+     */
     public void makeABet(Scanner input){
         System.out.println("you have $"+player.showBalance()+" in your account\nPlace your bet:");
         betIncrease = input.nextInt();
@@ -91,6 +105,14 @@ public class TexasHoldum implements CardGame {
         player.placeMultipleBets(betIncrease);
         hit(cardsOnTable);
     }
+
+    /**
+     * SUB METHOD OF THE FIND WINNER METHOD. THIS HANDLES INSTANCES OF TIES, AND THEN EITHER PAYS
+     * THE PLAYER OR PRINTS OUT THE DEALERS HAND BASED ON HIGHER SCORES. IN THE CASE OF A HIGH CARD
+     * TIE, THE DEAL IS THE WINNER
+     * @param playerScore
+     * @param dealerScore
+     */
     public void decideWinner(int playerScore, int dealerScore){
         tieCheck(playerScore,dealerScore);
         if(playerScore>dealerScore){
@@ -103,6 +125,11 @@ public class TexasHoldum implements CardGame {
             }
         }
     }
+
+    /**
+     * THIS METHOD ASKS THE PLAYER IF THEY WOULD LIKE TO PLAY AGAIN
+     * @return
+     */
     public boolean PlayAgain(){
         boolean stopGame = false;
         System.out.println("\nWould you like to play again? 1 for Yes, 2 for No");
@@ -113,13 +140,19 @@ public class TexasHoldum implements CardGame {
         return stopGame;
     }
 
-    // prints the First card of the dealer, and all the cards in the players hand.
+    /**
+     *  PRINTS ALL THE CARDS IN THE PLAYERS HAND.
+     */
     public void showHand(){
        System.out.print("Your hand is a\n");
         for(int i =0;i<playerHand.cardList.size();i++){
             System.out.println(playerHand.cardList.get(i).getGraphic());
         }
     }
+
+    /**
+     * PRINTS THE CARDS IN THE PLAYERS AND THE CARDS IN THE RIVER
+     */
     public void showHandAndRiver(){
         System.out.print("Your hand is a\n");
         for(int i =0;i<playerHand.cardList.size();i++){
@@ -130,7 +163,10 @@ public class TexasHoldum implements CardGame {
             System.out.println(cardsOnTable.cardList.get(i).getGraphic());
         }
     }
-    // Deal method is used to give the player and the dealer two cards each.
+
+    /**
+     * DEALS THE PLAYER AND THE DEALER TWO CARDS EACH
+     */
     public void deal() {
         Sounds.playShuffleSound();
         playerHand.cardList.add(deck.cards.get(cardsPulledFromDeck));
@@ -142,12 +178,108 @@ public class TexasHoldum implements CardGame {
         dealerHand.cardList.add(deck.cards.get(cardsPulledFromDeck));
         cardsPulledFromDeck++;
     }
-    // hit method adds a card to the Hand that is passed into it.
+
+    /**
+     * DEALS A CARD TO THE HAND PASSED INTO IT.
+     * @param hand
+     */
     public void hit(Hand hand) {
 
         hand.cardList.add(deck.cards.get(cardsPulledFromDeck));
         cardsPulledFromDeck++;
     }
+
+    /**
+     * SUB METHOD OF THE findWinner() METHOD. THIS TAKES A HAND AND RUNS IT THROUGH THE METHODS THAT
+     * CHECK HANDS FOR THE DIFFERENT POKER HANDS, GIVING IT ITS SCORE.
+     * @param hand
+     * @return
+     */
+    public int giveScore(Hand hand){
+        int score=0;
+        if(hasPair(hand)){
+            score =1;
+        }
+        if(hasTwoPair(hand)){
+            score=2;
+        }
+        if(hasThreeOfKind(hand)){
+            score=3;
+        }
+        if(hasStraight(hand)){
+            score=4;
+        }
+        if(hasFlush(hand)){
+            score=5;
+        }
+        if(hasFullHouse(hand)){
+            score=6;
+        }
+        if(hasFourOfKind(hand)){
+            score=7;
+        }
+        if(hasStraightFlush(hand)){
+            score=8;
+        }
+        return score;
+    }
+
+    /**
+     * THIS METHOD IS CALLED WHEN THE SCORE IS TIED. IT DETERMINES THE WINNER BY HIGH CARD.
+     * IN THE CASE OF A TIED HIGH CARD, THE DEALER WINS.
+     * @param playerScore
+     * @param dealerScore
+     */
+    public void tieCheck(int playerScore, int dealerScore) {
+        int playerHighCard = 0;
+        int dealerHighCard = 0;
+        if (playerScore == dealerScore) {
+            for (int i = 0; i < 5; i++) {
+                if (playerHand.cardList.get(i).getValue() > playerHighCard) {
+                    playerHighCard = playerHand.cardList.get(i).getValue();
+                }
+                if (dealerHand.cardList.get(i).getValue() > dealerHighCard) {
+                    dealerHighCard = dealerHand.cardList.get(i).getValue();
+                }
+            }
+        }
+        if (playerHighCard==11){
+            playerHighCard=14;
+        }
+        if (dealerHighCard==11){
+            dealerHighCard=14;
+        }
+        if (playerHighCard==10){
+            for (int i = 0; i < 5; i++) {
+                if(dealerHand.cardList.get(i).getFaceCard().equals("JACK")){
+                    if (dealerHighCard < 12){
+                        dealerHighCard = 11;
+                    }
+                }
+                if(dealerHand.cardList.get(i).getFaceCard().equals("QUEEN")){
+                    if (dealerHighCard < 13){
+                        dealerHighCard = 12;
+                    }
+                }
+                if(dealerHand.cardList.get(i).getFaceCard().equals("KING")){
+                    if (dealerHighCard < 14){
+                        dealerHighCard = 13;
+                    }
+                }
+            }
+        }
+        if(playerHighCard>dealerHighCard){
+            playerScore++;
+        } else if (dealerHighCard>=playerHighCard){
+            dealerScore++;
+        }
+    }
+
+    /**
+     * ALL METHODS BEYOND THIS COMMENT ARE THE POKER HAND RULES. THEY ARE SELF EXPLANATORY ENOUGH.
+     * @param hand
+     * @return
+     */
     public boolean hasPair(Hand hand){
        boolean hasAPair = false;
         for (int i=0;i<5;i++){
@@ -292,79 +424,7 @@ public class TexasHoldum implements CardGame {
         }
         return hasAStraightFlush;
     }
-    public int giveScore(Hand hand){
-        int score=0;
-        if(hasPair(hand)){
-           score =1;
-        }
-        if(hasTwoPair(hand)){
-            score=2;
-        }
-        if(hasThreeOfKind(hand)){
-            score=3;
-        }
-        if(hasStraight(hand)){
-            score=4;
-        }
-        if(hasFlush(hand)){
-            score=5;
-        }
-        if(hasFullHouse(hand)){
-            score=6;
-        }
-        if(hasFourOfKind(hand)){
-            score=7;
-        }
-        if(hasStraightFlush(hand)){
-            score=8;
-        }
-        return score;
-    }
 
-    public void tieCheck(int playerScore, int dealerScore) {
-        int playerHighCard = 0;
-        int dealerHighCard = 0;
-        if (playerScore == dealerScore) {
-            for (int i = 0; i < 5; i++) {
-                if (playerHand.cardList.get(i).getValue() > playerHighCard) {
-                    playerHighCard = playerHand.cardList.get(i).getValue();
-                }
-                if (dealerHand.cardList.get(i).getValue() > dealerHighCard) {
-                    dealerHighCard = dealerHand.cardList.get(i).getValue();
-                }
-            }
-        }
-        if (playerHighCard==11){
-            playerHighCard=14;
-        }
-        if (dealerHighCard==11){
-            dealerHighCard=14;
-        }
-        if (playerHighCard==10){
-            for (int i = 0; i < 5; i++) {
-               if(dealerHand.cardList.get(i).getFaceCard().equals("JACK")){
-                    if (dealerHighCard < 12){
-                        dealerHighCard = 11;
-                    }
-                }
-            if(dealerHand.cardList.get(i).getFaceCard().equals("QUEEN")){
-                    if (dealerHighCard < 13){
-                        dealerHighCard = 12;
-                    }
-                }
-            if(dealerHand.cardList.get(i).getFaceCard().equals("KING")){
-                    if (dealerHighCard < 14){
-                        dealerHighCard = 13;
-                    }
-                }
-            }
-        }
-        if(playerHighCard>dealerHighCard){
-            playerScore++;
-        } else if (dealerHighCard>=playerHighCard){
-            dealerScore++;
-        }
-    }
 
 }
 
