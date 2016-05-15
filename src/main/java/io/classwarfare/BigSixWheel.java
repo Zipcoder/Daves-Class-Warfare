@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class BigSixWheel extends Game{
     private Player player;
     private Random random;
-    private String wheelNumber;
+    protected String wheelNumber;
     private Scanner input;
     private boolean keepBet;
     private boolean keepPlay;
@@ -41,7 +41,7 @@ public class BigSixWheel extends Game{
      * calculate the user winning amount, if user did not win anything. return 0
      * @return
      */
-    private int calculateWinning(){
+    protected int calculateWinning(){
         int total=0;
         System.out.println("The wheel is on "+wheelNumber);
         for (String each: player.getBetAndType().keySet()) {
@@ -59,7 +59,7 @@ public class BigSixWheel extends Game{
     /**
      * spinning the wheel, put a string to wheelNumber
      */
-    private void spinningWheel(){
+    protected void spinningWheel(){
         int tempWheel= (random.nextInt(54)+1);
         if(tempWheel>0&&tempWheel<=24){
             wheelNumber="1";
@@ -81,6 +81,8 @@ public class BigSixWheel extends Game{
     /**
      * let user to enter the type of bet, and amount of the bet
      */
+
+
     private void placeTypeAndBet() {
         int bet = 0;
         String type="";
@@ -121,7 +123,7 @@ public class BigSixWheel extends Game{
      * @return
      */
 
-    private boolean checkType(String type){
+    protected boolean checkType(String type){
         boolean ans=false;
         switch (type.toLowerCase()){
             case "1":
