@@ -22,9 +22,6 @@ public class BigSixWheel extends Game{
         input=new Scanner(System.in);
     }
 
-    /**
-     * METHOD TO LOOP THROUGH BIG WHEEL GAME
-     */
     @Override
     public void play() {
         keepPlay=true;
@@ -41,7 +38,7 @@ public class BigSixWheel extends Game{
     }
 
     /**
-     * CALCULATE WIN AMOUNT, RETURN 0
+     * CALCULATE WIN AMOUNTreturn 0
      * @return
      */
     protected int calculateWinning(){

@@ -22,7 +22,7 @@ public class RussianRoulette extends Game {
         int chamberNumber = (random.nextInt(6) + 1);
 
         /**
-         * LOOP THROUGH CHAMBERS UNTIL RUSSIAN ROULETTE IS COMPELTE
+         * LOOP THROUGH CHAMBERS UNTIL RUSSIAN ROULETTE IS COMPLETE
          */
         while (chamberNumber > 0) {
 
