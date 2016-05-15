@@ -18,7 +18,10 @@ public class Player {
         this.bet=bet;
         this.wallet-=bet;
     }
-    public double payToPot(double amount){return wallet-=amount;}
+    public void placeMultipleBets(double bet){
+        this.bet+=bet;
+        this.wallet-=bet;
+    }
 
     public double showBalance(){
         return wallet;
@@ -35,5 +38,7 @@ public class Player {
     public double getWallet(){
         return wallet;
     }
+
+    public double setbet(double amount) { return this.bet=amount; }
 
 }
