@@ -38,8 +38,7 @@ public class BigSixWheel extends Game{
     }
 
     /**
-     * CALCULATE WIN AMOUNTreturn 0
-     * @return
+     * CALCULATE WIN AMOUNT - RETURNS 0
      */
     protected int calculateWinning(){
         int total=0;
@@ -86,7 +85,7 @@ public class BigSixWheel extends Game{
         String type="";
         try {
             System.out.println("You have " + player.getWallet() + " Dollars.");
-            System.out.println("Where would you like to place your bet? (1, 2, 5, 10, 20, Joker, Casino)\nEnter play to quit bet, enter exit to exit the game");
+            System.out.println("Where would you like to place your bet? (1, 2, 5, 10, 20, Joker, Casino)\nType play to spin the wheel, Type exit to exit the game");
             type=input.next().toLowerCase();
             if(!type.equals("play")&& !type.equals("exit")) {
                 System.out.print("Enter your bet :\n");
@@ -97,7 +96,7 @@ public class BigSixWheel extends Game{
                     System.out.println("Your bet is greater than your balance!");
                     placeTypeAndBet();
                 } else {
-                    System.out.println("That's an invalid bet! or invalid type of bet");
+                    System.out.println("That's an invalid bet, or invalid type of bet!");
                     placeTypeAndBet();
                 }
             }else if (type.equals("play")) {
