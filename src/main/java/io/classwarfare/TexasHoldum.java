@@ -51,11 +51,11 @@ public class TexasHoldum implements CardGame {
                 continue;
             }
             makeABet(input);
-
+            findWinner();
             if(!PlayAgain()){
                 break;
             }
-            findWinner();
+
         }
     }
 
