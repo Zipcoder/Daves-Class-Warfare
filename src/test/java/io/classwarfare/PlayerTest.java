@@ -26,5 +26,4 @@ public class PlayerTest {
         player.collectWinnings(500);
         Assert.assertEquals("The balance should be $5500 after collect winning", 5500, player.showBalance(),0 );
     }
-
 }

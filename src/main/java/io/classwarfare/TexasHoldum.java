@@ -17,7 +17,6 @@ public class TexasHoldum implements CardGame {
     Deck deck;
     Scanner input;
     boolean gameInSession;
-    double bet;
     double betIncrease;
     int betOrFold;
 
@@ -29,26 +28,10 @@ public class TexasHoldum implements CardGame {
     public void play(){
         input = new Scanner(System.in);
         gameInSession = true;
-        Player player = new Player();
         while (gameInSession && player.showBalance()>10) {
-
-            cardsPulledFromDeck = 0;
-            playerScore = 0;
-            dealerScore = 0;
-            bet = 0;
-            betIncrease = 0;
-            betOrFold = 0;
-            deck = new Deck();
-            playerHand = new Hand();
-            dealerHand = new Hand();
-            cardsOnTable = new Hand();
-
-            player.payToPot(10);
-            System.out.println("You ante $10");
-            deal();
-            showHand();
+            resetGame();
             for(int i=0;i<3;i++){
-                System.out.println("Press 1 to bet, 2 to fold");
+                System.out.println("\nPress 1 to bet, 2 to fold");
                 betOrFold = input.nextInt();
                 if(betOrFold==2){
                     break;
@@ -57,52 +40,77 @@ public class TexasHoldum implements CardGame {
                 showHandAndRiver();
             }
             if(betOrFold==2){
-                player.payToPot(bet+10);
                 if(!PlayAgain()){
                     break;
                 }
                 continue;
             }
+            System.out.println("\nPress 1 to bet, 2 to fold");
+            betOrFold = input.nextInt();
+            if(betOrFold==2){
+                continue;
+            }
             makeABet(input);
-            playerHand.cardList.addAll(cardsOnTable.cardList);
-            dealerHand.cardList.addAll(cardsOnTable.cardList);
-            playerScore = giveScore(playerHand);
-            dealerScore = giveScore(dealerHand);
-            decideWinner(playerScore,dealerScore);
+
             if(!PlayAgain()){
                 break;
             }
+            findWinner();
         }
     }
-
     public static void main(String[] args) {
         Player player = new Player();
         TexasHoldum texas = new TexasHoldum(player);
         texas.play();
     }
+    public void resetGame(){
+        cardsPulledFromDeck = 0;
+        playerScore = 0;
+        dealerScore = 0;
+        player.setbet(0);
+        betIncrease = 0;
+        betOrFold = 0;
+        deck = new Deck();
+        playerHand = new Hand();
+        dealerHand = new Hand();
+        cardsOnTable = new Hand();
+        player.placeMultipleBets(100);
+        System.out.println("You ante $100, your balance is $"+player.showBalance());
+        deal();
+        showHand();
+    }
+    public void findWinner(){
+        playerHand.cardList.addAll(cardsOnTable.cardList);
+        dealerHand.cardList.addAll(cardsOnTable.cardList);
+        playerScore = giveScore(playerHand);
+        dealerScore = giveScore(dealerHand);
+        decideWinner(playerScore,dealerScore);
+    }
     public void makeABet(Scanner input){
-        System.out.println("you have $"+(player.showBalance()-bet)+" in your account\nPlace your bet:");
+        System.out.println("you have $"+player.showBalance()+" in your account\nPlace your bet:");
         betIncrease = input.nextInt();
         while(betIncrease<100){
             System.out.println("You must bet at least $100 in order to continue");
             betIncrease = input.nextInt();
         }
-        bet+=betIncrease;
+        player.placeMultipleBets(betIncrease);
         hit(cardsOnTable);
     }
-
-    public void decideWinner(int playScore, int dealerScore){
+    public void decideWinner(int playerScore, int dealerScore){
         tieCheck(playerScore,dealerScore);
         if(playerScore>dealerScore){
-            System.out.println("CONGRATULATIONS! YOU WON $"+((bet*2)+20));
-            player.collectWinnings(bet+20);
-        }else if (dealerScore>playerScore){
-            playerLoss();
+            System.out.println("CONGRATULATIONS! YOU WON $"+((player.getBet()*2)+200));
+            player.collectWinnings((player.getBet()*2)+200);
+        }else if (dealerScore>=playerScore){
+            System.out.print("You lose, dealer had a \n|");
+            for(int i =0;i<playerHand.cardList.size();i++){
+                System.out.print(dealerHand.cardList.get(i).getValue()+" of "+dealerHand.cardList.get(i).getSuit()+"|");
+            }
         }
     }
     public boolean PlayAgain(){
         boolean stopGame = false;
-        System.out.println("Would you like to play again? 1 for Yes, 2 for No");
+        System.out.println("\nWould you like to play again? 1 for Yes, 2 for No");
         int choice = input.nextInt();
         if (choice==1){
             stopGame = true;
@@ -115,12 +123,6 @@ public class TexasHoldum implements CardGame {
        System.out.print("Your hand is a |");
         for(int i =0;i<playerHand.cardList.size();i++){
             System.out.print(playerHand.cardList.get(i).getValue()+" of "+playerHand.cardList.get(i).getSuit()+"|");
-        }
-    }
-    public void playerLoss(){
-        System.out.print("You lose, dealer had a \n|");
-        for(int i =0;i<playerHand.cardList.size();i++){
-            System.out.print(dealerHand.cardList.get(i).getValue()+" of "+dealerHand.cardList.get(i).getSuit()+"|");
         }
     }
     public void showHandAndRiver(){
