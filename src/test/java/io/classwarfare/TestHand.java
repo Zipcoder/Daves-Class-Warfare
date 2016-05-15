@@ -11,11 +11,11 @@ import java.util.ArrayList;
 public class TestHand {
     @Test
     public void testCheckValue(){
-        ArrayList<Card> playerCards = new ArrayList<Card>();
-        Hand hand =new Hand();
 
+        Hand hand =new Hand();
+        hand.cardList.add(new Card(Suit.SPADES,5,"test",""));
         hand.checkValue();
-        Assert.assertEquals("Hand check value should be :", 5, hand.checkValue(),0);
+        Assert.assertTrue("Hand check value should be :", hand.checkValue() == 5);
         }
     }
 

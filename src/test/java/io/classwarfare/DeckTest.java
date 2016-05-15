@@ -31,7 +31,7 @@ public class DeckTest {
         deckGraphics.cards.clear();
         deckGraphics.addSuitToDeck(Suit.DIAMONDS);
         String firstCardGraphic = deckGraphics.cards.get(0).getGraphic();
-        String expectedGraphic = "______\n|  " + "\u2666" + "2|\n|    |";
-        assertEquals("The graphic should show a diamond",firstCardGraphic,expectedGraphic);
+        String expectedGraphic = "______\n| " + "\u2666" + "2 |\n|    |";
+        assertEquals("The graphic should show a diamond",expectedGraphic,firstCardGraphic);
     }
 }

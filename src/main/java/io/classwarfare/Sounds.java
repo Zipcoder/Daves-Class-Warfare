@@ -55,6 +55,10 @@ public class Sounds {
             e.printStackTrace();
         }
     }
+
+    /**
+     *  PLAY CARD SHUFFLING SOUND
+     */
     public static void playShuffleSound() {
         URL shuffleFile = null;
         try {

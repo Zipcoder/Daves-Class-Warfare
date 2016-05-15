@@ -22,6 +22,9 @@ public class BigSixWheel extends Game{
         input=new Scanner(System.in);
     }
 
+    /**
+     * METHOD TO LOOP THROUGH BIG WHEEL GAME
+     */
     @Override
     public void play() {
         keepPlay=true;
@@ -38,7 +41,7 @@ public class BigSixWheel extends Game{
     }
 
     /**
-     * calculate the user winning amount, if user did not win anything. return 0
+     * CALCULATE WIN AMOUNT, RETURN 0
      * @return
      */
     protected int calculateWinning(){
@@ -57,7 +60,7 @@ public class BigSixWheel extends Game{
     }
 
     /**
-     * spinning the wheel, put a string to wheelNumber
+     * SPINNING THE WHEEL
      */
     protected void spinningWheel(){
         int tempWheel= (random.nextInt(54)+1);
@@ -79,10 +82,8 @@ public class BigSixWheel extends Game{
     }
 
     /**
-     * let user to enter the type of bet, and amount of the bet
+     * LET USER TO ENTER THE TYPE OF BET AND AMOUNT
      */
-
-
     private void placeTypeAndBet() {
         int bet = 0;
         String type="";
@@ -118,11 +119,8 @@ public class BigSixWheel extends Game{
     }
 
     /**
-     * check the type of bet player is making.
-     * @param type
-     * @return
+     * CHECK BET TYPE
      */
-
     protected boolean checkType(String type){
         boolean ans=false;
         switch (type.toLowerCase()){
