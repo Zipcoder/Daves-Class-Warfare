@@ -186,9 +186,9 @@ public class Blackjack extends Game {
 
     // prints the First card of the dealer, and all the cards in the players hand.
     public void showHands(){
-        System.out.print("Dealer showing card is |" + dealerHand.cardList.get(0).getValue()+" of "+dealerHand.cardList.get(0).getSuit()+"|\nYour hand is a |");
+        System.out.println("Dealer showing card is \n" + dealerHand.cardList.get(0).getGraphic() + "\n\nYour hand is: ");
         for(int i =0;i<playerHand.cardList.size();i++){
-            System.out.print(playerHand.cardList.get(i).getValue()+" of "+playerHand.cardList.get(i).getSuit()+"|");
+            System.out.println(playerHand.cardList.get(i).getGraphic());
         }
         System.out.println(" for a total of "+ playerHand.checkValue());
     }

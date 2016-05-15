@@ -32,14 +32,15 @@ public class Deck {
     protected void addSuitToDeck(Suit suit){
         String cardStructure = "|\n|    |";
 
-        for(int i = 2; i < 11;i++){
+        for(int i = 2; i < 10;i++){
 
-            cards.add(new Card(suit,i,"",pickCardGraphic(suit)+i+cardStructure));
+            cards.add(new Card(suit,i,"",pickCardGraphic(suit)+i+" "+cardStructure));
         }
-        cards.add(new Card(suit,11,"ACE",pickCardGraphic(suit)+ "A" + cardStructure));
-        cards.add(new Card(suit,10,"KING",pickCardGraphic(suit)+ "K" + cardStructure));
-        cards.add(new Card(suit,10,"QUEEN",pickCardGraphic(suit)+ "Q" + cardStructure));
-        cards.add(new Card(suit,10,"JACK",pickCardGraphic(suit)+ "J" + cardStructure));
+        cards.add(new Card(suit,10,"",pickCardGraphic(suit)+ "10" + cardStructure));
+        cards.add(new Card(suit,11,"ACE",pickCardGraphic(suit)+ "A " + cardStructure));
+        cards.add(new Card(suit,10,"KING",pickCardGraphic(suit)+ "K " + cardStructure));
+        cards.add(new Card(suit,10,"QUEEN",pickCardGraphic(suit)+ "Q " + cardStructure));
+        cards.add(new Card(suit,10,"JACK",pickCardGraphic(suit)+ "J " + cardStructure));
     }
 
     /**
@@ -49,16 +50,16 @@ public class Deck {
         String graphic = "";
         switch(suit){
             case SPADES:
-                graphic = "______\n|  "+"\u2660";
+                graphic = "______\n| "+"\u2660";
                 break;
             case HEARTS:
-                graphic = "______\n|  "+"\u2665";
+                graphic = "______\n| "+"\u2665";
                 break;
             case DIAMONDS:
-                graphic = "______\n|  "+"\u2666";
+                graphic = "______\n| "+"\u2666";
                 break;
             case CLUBS:
-                graphic = "______\n|  "+"\u2663";
+                graphic = "______\n| "+"\u2663";
                 break;
         }
         return graphic;
