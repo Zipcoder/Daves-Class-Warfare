@@ -18,6 +18,7 @@ public class Player {
         this.bet=bet;
         this.wallet-=bet;
     }
+    public double payToPot(double amount){return wallet-=amount;}
 
     public double showBalance(){
         return wallet;

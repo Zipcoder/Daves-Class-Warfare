@@ -20,8 +20,71 @@ public class BlackjackTest {
         assertEquals("Hand should not have blackjack",expected,actual);
     }
     @Test
-    public void chooseHitOrStayTest(){
-        
+    public void checkIfHandIsOver21Test(){
+        Player player = new Player();
+        Blackjack blackjack = new Blackjack(player);
+        Hand hand = new Hand();
+        boolean expected = false;
+        boolean actual = blackjack.checkIfHandIsOver21(hand);
+        assertEquals("Hand should not be over 21, should retrun false",expected,actual);
     }
+    @Test
+    public void dealTest(){
+        Player player = new Player();
+        Blackjack blackjack = new Blackjack(player);
+        Hand playerHand = new Hand();
+        blackjack.deal();
+        int expected = 2;
+        int actual = playerHand.cardList.size();
+        assertEquals("Hand should have a length of 2",expected,actual);
+    }
+    @Test
+    public void hitTest(){
+        Player player = new Player();
+        Blackjack blackjack = new Blackjack(player);
+        Hand playerHand = new Hand();
+        blackjack.hit(playerHand);
+        int expected = 1;
+        int actual = playerHand.cardList.size();
+        assertEquals("Hand should have a length of 1",expected,actual);
+    }
+    @Test
+    public void checkHandForBustTest(){
+        Player player = new Player();
+        Blackjack blackjack = new Blackjack(player);
+        Hand hand = new Hand();
+        hand.cardList.add(new Card(Suit.HEARTS,10,"",""));
+        hand.cardList.add(new Card(Suit.CLUBS,10,"",""));
+        hand.cardList.add(new Card(Suit.HEARTS,9,"",""));
+        boolean expected = true;
+        boolean actual = blackjack.checkIfHandIsOver21(hand);
+        assertEquals("Hand should be over 21, and should be busted",expected,actual);
+    }
+
+/*
+       @Test
+    public void chooseHitOrStayTest(){
+        Player player = new Player();
+        Blackjack blackjack = new Blackjack(player);
+        Scanner scanner = new Scanner();
+        int hitOrStay = 1;
+        Hand playerHand= new Hand();
+        int expected = 1;
+        blackjack.chooseHitOrStay(scanner);
+        int actual = playerHand.cardList.size();
+    }
+
+    @Test
+    public void decideWinnerTest(){
+        Player player = new Player();
+        Blackjack blackjack = new Blackjack(player);
+        Hand dealerHand = new Hand();
+        Hand playerHand = new Hand();
+        Hand expected = dealerHand;
+        blackjack.decideWinner();
+        assertEquals("should return the dealers hand as the winning hand",expected,a);
+    }
+*/
 }
+
 
